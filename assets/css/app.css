@@ -1635,10 +1635,10 @@ dialog::backdrop {
   margin-bottom: 8px;
 }
 .analytics-kpi-val {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 700;
   color: #0f172a;
-  line-height: 1.1;
+  line-height: 1.2;
   font-variant-numeric: tabular-nums;
 }
 .analytics-kpi-sub {

@@ -132,8 +132,7 @@
               </svg>
               Meteran Biogas Digital
             </span>
-            <span class="badge badge-success" id="stoveStatusBadge">
-              <span class="pulse-dot" style="color:currentColor;"></span>
+            <span class="status-text-plain text-ok" id="stoveStatusBadge">
               <span id="stoveStatusText">Kompor Aktif</span>
             </span>
           </div>
@@ -153,10 +152,7 @@
           <!-- Weekly 7-Day Usage SVG Trading Line Chart -->
           <div class="chart-box trading-chart-box">
             <div class="chart-header-row">
-              <div style="display:flex;align-items:center;gap:6px;">
-                <span>Tren Konsumsi Harian (m³)</span>
-                <span class="trading-live-badge">● LIVE TRACK</span>
-              </div>
+              <span>Tren Konsumsi Harian (m³)</span>
               <span class="tabular-nums" style="color:var(--text-primary);">Rata-rata: <strong id="avgDailyUsage">2,6 m³/hari</strong></span>
             </div>
             <svg class="svg-trading-chart" id="weeklySvgChart" viewBox="0 0 340 100" preserveAspectRatio="none" aria-label="Grafik Garis Trading Konsumsi Harian"></svg>
@@ -173,10 +169,7 @@
               </svg>
               Tagihan &amp; Iuran Pemeliharaan
             </span>
-            <span class="badge badge-success" id="billingBadge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
+            <span class="status-text-plain text-ok" id="billingBadge">
               <span id="billingStatusText">Lunas &bull; Nov 2026</span>
             </span>
           </div>

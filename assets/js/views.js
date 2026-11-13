@@ -1822,14 +1822,14 @@ window.MB = window.MB || {};
           <!-- KPI 1: Total Pelanggan -->
           <div class="analytics-card">
             <div class="analytics-kpi-title">Total Pelanggan Terdaftar</div>
-            <div class="analytics-kpi-val">380 <span style="font-size:16px;font-weight:600;color:#64748b;">KK</span></div>
+            <div class="analytics-kpi-val">380 <span style="font-size:14px;font-weight:600;color:#64748b;">KK</span></div>
             <div class="analytics-kpi-sub">Kelurahan Manggar, Balikpapan Timur</div>
           </div>
 
           <!-- KPI 2: Konsumsi Bulanan -->
           <div class="analytics-card">
             <div class="analytics-kpi-title">Konsumsi Bulanan Terukur</div>
-            <div class="analytics-kpi-val">3.416,4 <span style="font-size:16px;font-weight:600;color:#64748b;">m³</span></div>
+            <div class="analytics-kpi-val">3.416,4 <span style="font-size:14px;font-weight:600;color:#64748b;">m³</span></div>
             <div class="analytics-kpi-sub">Rata-rata 8,99 m³ per rumah tangga</div>
           </div>
 
@@ -1843,7 +1843,7 @@ window.MB = window.MB || {};
           <!-- KPI 4: Proyeksi ROI -->
           <div class="analytics-card">
             <div class="analytics-kpi-title">Proyeksi ROI Program</div>
-            <div class="analytics-kpi-val">3,2 <span style="font-size:16px;font-weight:600;color:#64748b;">Tahun</span></div>
+            <div class="analytics-kpi-val">3,2 <span style="font-size:14px;font-weight:600;color:#64748b;">Tahun</span></div>
             <div class="analytics-kpi-sub">Investasi infrastruktur DLH</div>
           </div>
         </div>

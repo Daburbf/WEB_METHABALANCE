@@ -362,16 +362,16 @@
       }
     }
 
-    // Stove Badge on Meter Card
+    // Stove Status on Meter Card (Plain Text, No Badge Box)
     if (el.stoveStatusBadge && el.stoveStatusText) {
       if (!isNormal) {
-        el.stoveStatusBadge.className = 'badge badge-danger';
+        el.stoveStatusBadge.className = 'status-text-plain text-danger';
         el.stoveStatusText.textContent = 'Aliran Terisolasi Pusat';
       } else if (isUserValveClosed) {
-        el.stoveStatusBadge.className = 'badge badge-warning';
+        el.stoveStatusBadge.className = 'status-text-plain text-warning';
         el.stoveStatusText.textContent = 'Katup Mandiri Terkunci';
       } else {
-        el.stoveStatusBadge.className = 'badge badge-success';
+        el.stoveStatusBadge.className = 'status-text-plain text-ok';
         el.stoveStatusText.textContent = 'Kompor Aktif';
       }
     }

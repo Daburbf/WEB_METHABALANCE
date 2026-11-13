@@ -408,6 +408,30 @@ body {
   border: 1px solid var(--color-savings-border);
 }
 
+/* Plain Text Status (No Pill/Badge Box) */
+.status-text-plain {
+  font-size: 0.74rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.status-text-plain.text-ok, .status-text-plain.badge-success {
+  color: var(--color-emerald-deep);
+}
+
+.status-text-plain.text-warning, .status-text-plain.badge-warning {
+  color: #b45309;
+}
+
+.status-text-plain.text-danger, .status-text-plain.badge-danger {
+  color: #dc2626;
+}
+
 /* Pulsing Status Dot */
 .pulse-dot {
   width: 7px;
