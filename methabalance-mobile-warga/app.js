@@ -54,7 +54,6 @@
     billingBadge: document.getElementById('billingBadge'),
     billingStatusText: document.getElementById('billingStatusText'),
     billingAmountText: document.getElementById('billingAmountText'),
-    billingAllocationText: document.getElementById('billingAllocationText'),
     btnViewReceipt: document.getElementById('btnViewReceipt'),
     miniSavingsAmount: document.getElementById('miniSavingsAmount'),
     miniSavingsTubes: document.getElementById('miniSavingsTubes'),
@@ -202,9 +201,6 @@
     }
     if (el.billingStatusText) {
       el.billingStatusText.innerHTML = (account.billingStatus || 'Lunas') + ' &bull; ' + (account.billingPeriod || 'Nov 2026');
-    }
-    if (el.billingAllocationText) {
-      el.billingAllocationText.textContent = account.billingAllocation || 'Alokasi: Honor teknisi lokal & pengurasan water-trap';
     }
     if (el.miniSavingsAmount) {
       el.miniSavingsAmount.textContent = MBM.data.formatRupiah(account.monthlyLpgSavings);

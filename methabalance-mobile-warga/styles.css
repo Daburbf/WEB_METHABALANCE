@@ -4,15 +4,16 @@
  * UPTD TPAS Manggar × Dinas Lingkungan Hidup Kota Balikpapan
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
 
 /* ==========================================================================
    DESIGN TOKENS (CLEAN EMERALD & WHITE INDUSTRIAL DESIGN)
    ========================================================================== */
 :root {
-  /* Fonts */
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Fonts: Ultra-Clean Inter for UI and Numbers */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  --font-numbers: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", -apple-system, sans-serif;
 
   /* Backgrounds */
   --bg-app: #f8fafc;
@@ -101,16 +102,14 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum", "lnum";
-  font-variant-numeric: tabular-nums lining-nums;
 }
 
-/* Silky Smooth Proportional Numbers (No Harsh Monospace) */
-.tabular-nums, .num, .meter-big-value, .billing-amount {
-  font-family: var(--font-sans);
-  font-feature-settings: "tnum" 1, "lnum" 1, "cv02", "cv03", "cv04", "cv11";
-  font-variant-numeric: tabular-nums lining-nums;
-  letter-spacing: -0.02em;
+/* Silky Smooth Clean Modern Numbers (Inter typography, no harsh tabular artifacts) */
+.tabular-nums, .num, .meter-big-value, .billing-amount, strong.tabular-nums {
+  font-family: var(--font-numbers);
+  font-feature-settings: normal;
+  font-variant-numeric: normal;
+  letter-spacing: -0.025em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -555,10 +554,12 @@ body {
 }
 
 .meter-big-value {
-  font-size: 2.25rem;
-  font-weight: 800;
+  font-family: var(--font-numbers);
+  font-size: 2.15rem;
+  font-weight: 700;
   color: var(--text-primary);
   line-height: 1;
+  letter-spacing: -0.035em;
 }
 
 .meter-big-value .unit {
@@ -620,40 +621,27 @@ body {
 
 .billing-content-box {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 4px 0 12px;
-}
-
-.billing-sub-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  display: block;
+  margin: 6px 0 12px;
 }
 
 .billing-amount {
-  font-size: 1.85rem;
-  font-weight: 800;
+  font-family: var(--font-numbers);
+  font-size: 1.45rem;
+  font-weight: 700;
   color: var(--text-primary);
   line-height: 1.15;
-  margin: 2px 0 3px;
-  font-variant-numeric: tabular-nums;
+  margin: 0;
+  letter-spacing: -0.03em;
 }
 
 .billing-unit {
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-muted);
-}
-
-.billing-note {
-  font-size: 0.74rem;
-  color: var(--text-secondary);
-  line-height: 1.4;
+  letter-spacing: normal;
 }
 
 .billing-action-area {
@@ -933,10 +921,12 @@ body {
 }
 
 .telemetry-big-num {
-  font-size: 1.45rem;
-  font-weight: 800;
+  font-family: var(--font-numbers);
+  font-size: 1.4rem;
+  font-weight: 700;
   color: var(--text-primary);
   line-height: 1.1;
+  letter-spacing: -0.025em;
 }
 
 .telemetry-unit {
