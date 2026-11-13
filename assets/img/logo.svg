@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="mbGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="mbAccent" x1="12" y1="12" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Badge -->
+  <rect width="48" height="48" rx="14" fill="#0F3B2F"/>
+  <rect x="1" y="1" width="46" height="46" rx="13" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+  
+  <!-- Modern Geometric Metha-Balance Symbol (Equilibrium Loop + Gas Stream) -->
+  <path d="M14 24C14 18.477 18.477 14 24 14C29.523 14 34 18.477 34 24C34 29.523 29.523 34 24 34" stroke="url(#mbGrad)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="24" cy="24" r="4.5" fill="url(#mbAccent)"/>
+  <path d="M10 24H14" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
+  <path d="M34 24H38" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
+  <path d="M24 10V14" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <path d="M24 34V38" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="24" cy="10" r="2" fill="#34d399"/>
+  <circle cx="38" cy="24" r="2" fill="#34d399"/>
+</svg>
