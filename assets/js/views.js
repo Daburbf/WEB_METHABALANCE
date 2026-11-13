@@ -146,25 +146,78 @@ window.MB = window.MB || {};
               </div>
             </div>
 
-            <!-- Screenshot Showcase Section Header -->
-            <div style="border-top:1px solid #e2e8f0;padding-top:14px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+            <!-- Screenshot Showcase Section Header (Tampilan Awal 3-in-1) -->
+            <div style="border-top:1px solid #e2e8f0;padding-top:16px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
                 <div>
-                  <h3 style="font-size:14px;font-weight:700;color:#0f172a;margin:0;">Galeri Tangkapan Layar Fitur (Format JPG Resmi)</h3>
-                  <div style="font-size:11px;color:#64748b;margin-top:2px;">Tangkapan layar utuh setiap fitur 1 per 1 tanpa terpotong &bull; Klik gambar untuk melihat ukuran penuh</div>
-                </div>
-
-                <!-- Showcase Tab Filter Buttons -->
-                <div class="btn-group" id="galleryTabGroup">
-                  <button class="btn btn-sm btn-filter active" type="button" data-gallery-tab="all">Semua Fitur (23)</button>
-                  <button class="btn btn-sm btn-filter" type="button" data-gallery-tab="web">Web SCADA (8)</button>
-                  <button class="btn btn-sm btn-filter" type="button" data-gallery-tab="warga">Mobile Warga (7)</button>
-                  <button class="btn btn-sm btn-filter" type="button" data-gallery-tab="admin">Mobile Admin (8)</button>
+                  <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin:0;">Tangkapan Layar Tampilan Awal (3-in-1 Ecosystem)</h3>
+                  <div style="font-size:12px;color:#64748b;margin-top:2px;">Tampilan awal halaman utama Web SCADA, Mobile Portal Warga &amp; Mobile Admin tanpa ada yang terpotong.</div>
                 </div>
               </div>
 
-              <!-- Gallery Grid -->
-              <div id="ecosystemGalleryGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(210px, 1fr));gap:12px;max-height:480px;overflow-y:auto;padding-right:4px;">
+              <!-- 3-in-1 Primary Showcase Cards -->
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(290px, 1fr));gap:16px;">
+                <!-- 1. Web SCADA Overview -->
+                <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.04);display:flex;flex-direction:column;">
+                  <a href="screenshots/01_web/01_web_dashboard_scada_ringkasan.jpg" target="_blank" style="display:block;height:190px;overflow:hidden;background:#f8fafc;position:relative;">
+                    <img src="screenshots/01_web/01_web_dashboard_scada_ringkasan.jpg" alt="Tampilan Awal Web SCADA" style="width:100%;height:100%;object-fit:cover;object-position:top;" loading="lazy">
+                    <span style="position:absolute;top:8px;left:8px;background:rgba(15,23,42,0.85);color:#ffffff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;backdrop-filter:blur(4px);">Web Platform &bull; 1600px</span>
+                  </a>
+                  <div style="padding:14px;flex:1;display:flex;flex-direction:column;justify-content:space-between;">
+                    <div>
+                      <div style="font-weight:700;font-size:13px;color:#0f172a;">1. Web SCADA Command Center (Tampilan Awal)</div>
+                      <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.4;">
+                        Tampilan awal dashboard operasional utama: monitoring status 15 node SCADA, neraca massa gas hulu-hilir, dan peta GIS.
+                      </p>
+                    </div>
+                    <div style="margin-top:12px;display:flex;gap:8px;">
+                      <a href="#overview" class="btn btn-sm" style="flex:1;text-align:center;">Lihat Web Live</a>
+                      <a href="screenshots/01_web/01_web_dashboard_scada_ringkasan.jpg" target="_blank" class="btn btn-sm btn-primary" style="flex:1;text-align:center;">Buka Gambar &rarr;</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2. Mobile Warga Beranda -->
+                <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.04);display:flex;flex-direction:column;">
+                  <a href="screenshots/02_mobile_warga/01_mobile_warga_tab1_beranda.jpg" target="_blank" style="display:block;height:190px;overflow:hidden;background:#f8fafc;position:relative;text-align:center;">
+                    <img src="screenshots/02_mobile_warga/01_mobile_warga_tab1_beranda.jpg" alt="Tampilan Awal Mobile Warga" style="width:auto;height:100%;max-width:100%;object-fit:contain;margin:0 auto;" loading="lazy">
+                    <span style="position:absolute;top:8px;left:8px;background:rgba(5,150,105,0.9);color:#ffffff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;">Mobile Warga &bull; iPhone View</span>
+                  </a>
+                  <div style="padding:14px;flex:1;display:flex;flex-direction:column;justify-content:space-between;">
+                    <div>
+                      <div style="font-weight:700;font-size:13px;color:#0f172a;">2. Mobile Portal Warga &amp; UMKM (Tampilan Awal)</div>
+                      <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.4;">
+                        Tampilan awal Beranda Warga: Status keamanan jaringan pipa stabil, meteran digital, grafik trading pemakaian, dan info tagihan iuran.
+                      </p>
+                    </div>
+                    <div style="margin-top:12px;display:flex;gap:8px;">
+                      <a href="methabalance-mobile-warga/index.html" target="_blank" class="btn btn-sm" style="flex:1;text-align:center;">Buka App Warga</a>
+                      <a href="screenshots/02_mobile_warga/01_mobile_warga_tab1_beranda.jpg" target="_blank" class="btn btn-sm btn-primary" style="flex:1;text-align:center;">Buka Gambar &rarr;</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3. Mobile Admin Ringkasan -->
+                <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.04);display:flex;flex-direction:column;">
+                  <a href="screenshots/03_mobile_admin/01_mobile_admin_tab1_ringkasan.jpg" target="_blank" style="display:block;height:190px;overflow:hidden;background:#f8fafc;position:relative;text-align:center;">
+                    <img src="screenshots/03_mobile_admin/01_mobile_admin_tab1_ringkasan.jpg" alt="Tampilan Awal Mobile Admin" style="width:auto;height:100%;max-width:100%;object-fit:contain;margin:0 auto;" loading="lazy">
+                    <span style="position:absolute;top:8px;left:8px;background:rgba(15,59,47,0.95);color:#ffffff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;">Mobile Admin &bull; Operator</span>
+                  </a>
+                  <div style="padding:14px;flex:1;display:flex;flex-direction:column;justify-content:space-between;">
+                    <div>
+                      <div style="font-weight:700;font-size:13px;color:#0f172a;">3. Mobile Admin &amp; Operator DLH (Tampilan Awal)</div>
+                      <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.4;">
+                        Tampilan awal Ringkasan Admin: 4 KPI eksekutif Lovable, gauge efisiensi destruksi metana 96,2% tanpa tabrakan, dan rekap finansial.
+                      </p>
+                    </div>
+                    <div style="margin-top:12px;display:flex;gap:8px;">
+                      <a href="methabalance-mobile-admin/index.html" target="_blank" class="btn btn-sm" style="flex:1;text-align:center;">Buka App Admin</a>
+                      <a href="screenshots/03_mobile_admin/01_mobile_admin_tab1_ringkasan.jpg" target="_blank" class="btn btn-sm btn-primary" style="flex:1;text-align:center;">Buka Gambar &rarr;</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
                 <!-- Web Screenshots -->
                 <div class="gallery-item" data-category="web" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
                   <a href="screenshots/01_web/01_web_dashboard_scada_ringkasan.jpg" target="_blank" style="display:block;height:120px;overflow:hidden;background:#f1f5f9;">
