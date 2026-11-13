@@ -11,7 +11,7 @@ const puppeteer = require('puppeteer-core');
 const EDGE_PATH = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
 const BASE_URL = 'http://localhost:8080';
 
-const OUT_DIR = path.join(__dirname, 'screenshots');
+const OUT_DIR = path.resolve('C:\\Users\\TUF GAMING\\Downloads\\WEB_BIO', 'screenshots');
 const DIRS = {
   web: path.join(OUT_DIR, '01_web'),
   warga: path.join(OUT_DIR, '02_mobile_warga'),
