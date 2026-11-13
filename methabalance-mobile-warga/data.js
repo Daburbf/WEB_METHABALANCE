@@ -68,7 +68,7 @@ window.MBM = window.MBM || {};
       meterSerial: 'MTR-MGR-UMKM-008-AW',
       currentMonthUsage: 94.2, // m³
       previousMonthUsage: 96.5, // m³
-      monthlyBilling: 50000, // Rp / bulan
+      monthlyBilling: 25000, // Rp / bulan (Tarif Resmi Pemanfaatan Biogas UMKM TPAS Manggar)
       billingPeriod: 'November 2026',
       billingStatus: 'Lunas',
       billingAllocation: 'Kas Perawatan Jalur UMKM Klaster C',

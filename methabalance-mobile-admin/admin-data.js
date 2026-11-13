@@ -18,7 +18,7 @@ window.MB_ADMIN = window.MB_ADMIN || {};
     avgPerHousehold: 8.99, // m³
     monthlySavings: 44400000, // Rp / bulan
     annualSavings: 1065600000, // Rp / tahun
-    monthlyRetribution: 4090000, // Rp / bulan (Rp 10.000 / pelanggan)
+    monthlyRetribution: 4525000, // Rp / bulan (380 RT @Rp 10.000 + 29 UMKM @Rp 25.000)
     collectionRate: 98.2, // %
     methaneDestructionRate: 96.2, // %
     projectedRoiYears: 3.2,
@@ -54,8 +54,8 @@ window.MB_ADMIN = window.MB_ADMIN || {};
     { id: 'MG-1010', name: 'Dewi Lestari', type: 'Rumah Tangga', rt: 'RT 23', address: 'RT 23 No. 11', node: 'Node-06', meter: 33.3, tariff: 10000, savings: 47500, battery: 78, status: 'Lunas', valve: 'Normal' },
     { id: 'MG-1011', name: 'Hendro Siswanto', type: 'Rumah Tangga', rt: 'RT 24', address: 'RT 24 No. 27', node: 'Node-07', meter: 35.0, tariff: 10000, savings: 49000, battery: 76, status: 'Lunas', valve: 'Normal' },
     { id: 'MG-1012', name: 'Fatimah Az-Zahra', type: 'Rumah Tangga', rt: 'RT 21', address: 'RT 21 No. 16', node: 'Node-04', meter: 36.7, tariff: 10000, savings: 50500, battery: 74, status: 'Lunas', valve: 'Normal' },
-    { id: 'UMKM-001', name: 'Sentra Tahu & Tempe Manggar', type: 'Pelaku Usaha', rt: 'RT 22', address: 'Sentra Industri RT 22', node: 'Node-11', meter: 94.2, tariff: 10000, savings: 420000, battery: 98, status: 'Lunas', valve: 'Normal' },
-    { id: 'UMKM-002', name: 'Dapur Keripik Singkong Barokah', type: 'Pelaku Usaha', rt: 'RT 23', address: 'Gang TPA RT 23 No. 02', node: 'Node-11', meter: 68.5, tariff: 10000, savings: 310000, battery: 95, status: 'Lunas', valve: 'Normal' }
+    { id: 'UMKM-001', name: 'Sentra Tahu & Tempe Manggar', type: 'Pelaku Usaha', rt: 'RT 22', address: 'Sentra Industri RT 22', node: 'Node-11', meter: 94.2, tariff: 25000, savings: 420000, battery: 98, status: 'Lunas', valve: 'Normal' },
+    { id: 'UMKM-002', name: 'Dapur Keripik Singkong Barokah', type: 'Pelaku Usaha', rt: 'RT 23', address: 'Gang TPA RT 23 No. 02', node: 'Node-11', meter: 68.5, tariff: 25000, savings: 310000, battery: 95, status: 'Lunas', valve: 'Normal' }
   ];
 
   // SCADA Network Pipeline Nodes (15 Nodes)

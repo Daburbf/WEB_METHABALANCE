@@ -1837,7 +1837,7 @@ window.MB = window.MB || {};
           <div class="analytics-card">
             <div class="analytics-kpi-title">Penghematan Warga</div>
             <div class="analytics-kpi-val" style="color:#059669;">Rp 44.400.000</div>
-            <div class="analytics-kpi-sub">Akumulasi bulan berjalan &bull; Tarif Rp 10.000/KK</div>
+            <div class="analytics-kpi-sub">Tarif: RT Rp 10.000 &bull; UMKM Rp 25.000</div>
           </div>
 
           <!-- KPI 4: Proyeksi ROI -->
@@ -1938,8 +1938,8 @@ window.MB = window.MB || {};
                 <span class="financial-metric-val">Rp 8,1 Juta / bulan</span>
               </div>
               <div class="financial-metric-row">
-                <span class="financial-metric-label">Iuran Retribusi Warga</span>
-                <span class="financial-metric-val" style="color:#059669;">Rp 10.000 / KK / bulan</span>
+                <span class="financial-metric-label">Iuran Retribusi Biogas</span>
+                <span class="financial-metric-val" style="color:#059669;">RT Rp 10.000 &bull; UMKM Rp 25.000 / bln</span>
               </div>
             </div>
           </div>

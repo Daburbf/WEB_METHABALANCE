@@ -236,7 +236,7 @@
         <div class="customer-card-footer">
           <div class="cust-foot-col">
             <span class="foot-label">Iuran Bulanan</span>
-            <span class="foot-status-text text-ok">&bull; Lunas (Rp 10.000)</span>
+            <span class="foot-status-text text-ok">&bull; Lunas (${D.formatRupiah(c.tariff)})</span>
           </div>
           <div class="cust-foot-col right">
             <span class="foot-label">Penghematan LPG</span>
