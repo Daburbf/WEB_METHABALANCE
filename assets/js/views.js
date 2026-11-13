@@ -73,6 +73,335 @@ window.MB = window.MB || {};
 
     var html = `
       <div class="page">
+        <!-- 3-IN-1 ECOSYSTEM LAUNCHER & SCREENSHOT SHOWCASE HERO -->
+        <div class="panel" style="margin-bottom:20px;border-top:3px solid #059669;background:linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+          <div class="panel-header" style="flex-wrap:wrap;gap:12px;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">
+                METHABALANCE Biogas Ecosystem &bull; TPAS Manggar &times; DLH Balikpapan
+              </div>
+              <h2 style="font-size:18px;font-weight:700;color:#0f172a;margin:0;">
+                Portal 3-in-1: Web SCADA, Mobile Warga &amp; Mobile Admin
+              </h2>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a href="methabalance-mobile-warga/index.html" target="_blank" class="btn btn-sm" style="background:#ecfdf5;border-color:#a7f3d0;color:#064e3b;font-weight:600;display:inline-flex;align-items:center;gap:6px;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                Buka Mobile Warga &rarr;
+              </a>
+              <a href="methabalance-mobile-admin/index.html" target="_blank" class="btn btn-sm btn-primary" style="display:inline-flex;align-items:center;gap:6px;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                Buka Mobile Admin &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <!-- 3 Apps Summary Cards -->
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:12px;margin-bottom:18px;">
+              <!-- App 1: Web SCADA -->
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                    <span style="font-weight:700;font-size:13px;color:#0f172a;">1. Web SCADA Command Center</span>
+                    <span class="status-text st-ok" style="font-size:10px;">Aktif</span>
+                  </div>
+                  <p style="font-size:12px;color:#64748b;margin:0;line-height:1.4;">
+                    Pusat pemantauan 15 Node IoT, neraca massa gas 8,3 km pipa, peta GIS Balikpapan, dan analitik Lovable.
+                  </p>
+                </div>
+                <div style="margin-top:10px;font-size:11px;color:#059669;font-weight:600;">Sedang Anda Akses &bull; Layar Desktop</div>
+              </div>
+
+              <!-- App 2: Mobile Warga -->
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                    <span style="font-weight:700;font-size:13px;color:#0f172a;">2. Mobile Portal Warga &amp; UMKM</span>
+                    <span class="tag" style="font-size:10px;">Warga &bull; RT 23</span>
+                  </div>
+                  <p style="font-size:12px;color:#64748b;margin:0;line-height:1.4;">
+                    Meteran digital, grafik tren pemakaian, info iuran Rp 10k/25k, panduan keselamatan, dan lapor bau gas geotag GPS.
+                  </p>
+                </div>
+                <div style="margin-top:10px;">
+                  <a href="methabalance-mobile-warga/index.html" target="_blank" style="font-size:11px;color:#059669;font-weight:600;text-decoration:none;">Buka Aplikasi Warga &rarr;</a>
+                </div>
+              </div>
+
+              <!-- App 3: Mobile Admin -->
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                    <span style="font-weight:700;font-size:13px;color:#0f172a;">3. Mobile Admin &amp; Operator DLH</span>
+                    <span class="tag up" style="font-size:10px;">Operator</span>
+                  </div>
+                  <p style="font-size:12px;color:#64748b;margin:0;line-height:1.4;">
+                    Dashboard analitik eksekutif, kendali darurat katup motorik SS304 (&lt; 5 detik), dan tiket laporan lapangan.
+                  </p>
+                </div>
+                <div style="margin-top:10px;">
+                  <a href="methabalance-mobile-admin/index.html" target="_blank" style="font-size:11px;color:#059669;font-weight:600;text-decoration:none;">Buka Aplikasi Admin &rarr;</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Screenshot Showcase Section Header -->
+            <div style="border-top:1px solid #e2e8f0;padding-top:14px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                <div>
+                  <h3 style="font-size:14px;font-weight:700;color:#0f172a;margin:0;">Galeri Tangkapan Layar Fitur (Format JPG Resmi)</h3>
+                  <div style="font-size:11px;color:#64748b;margin-top:2px;">Tangkapan layar utuh setiap fitur 1 per 1 tanpa terpotong &bull; Klik gambar untuk melihat ukuran penuh</div>
+                </div>
+
+                <!-- Showcase Tab Filter Buttons -->
+                <div class="btn-group" id="galleryTabGroup">
+                  <button class="btn btn-sm btn-filter active" type="button" data-gallery-tab="all">Semua Fitur (23)</button>
+                  <button class="btn btn-sm btn-filter" type="button" data-gallery-tab="web">Web SCADA (8)</button>
+                  <button class="btn btn-sm btn-filter" type="button" data-gallery-tab="warga">Mobile Warga (7)</button>
+                  <button class="btn btn-sm btn-filter" type="button" data-gallery-tab="admin">Mobile Admin (8)</button>
+                </div>
+              </div>
+
+              <!-- Gallery Grid -->
+              <div id="ecosystemGalleryGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(210px, 1fr));gap:12px;max-height:480px;overflow-y:auto;padding-right:4px;">
+                <!-- Web Screenshots -->
+                <div class="gallery-item" data-category="web" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/01_web/01_web_dashboard_scada_ringkasan.jpg" target="_blank" style="display:block;height:120px;overflow:hidden;background:#f1f5f9;">
+                    <img src="screenshots/01_web/01_web_dashboard_scada_ringkasan.jpg" alt="Web Overview" style="width:100%;height:100%;object-fit:cover;object-position:top;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;">Web SCADA</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Dashboard SCADA Utama</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="web" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/01_web/02_web_gis_topologi_jalur_pipa.jpg" target="_blank" style="display:block;height:120px;overflow:hidden;background:#f1f5f9;">
+                    <img src="screenshots/01_web/02_web_gis_topologi_jalur_pipa.jpg" alt="Web GIS" style="width:100%;height:100%;object-fit:cover;object-position:top;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;">Web SCADA</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">GIS &amp; Peta Pipa Manggar</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="web" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/01_web/03_web_analytics_pelanggan_karbon.jpg" target="_blank" style="display:block;height:120px;overflow:hidden;background:#f1f5f9;">
+                    <img src="screenshots/01_web/03_web_analytics_pelanggan_karbon.jpg" alt="Web Analytics" style="width:100%;height:100%;object-fit:cover;object-position:top;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;">Web SCADA</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Analitik Pelanggan Lovable</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="web" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/01_web/04_web_live_monitoring_telemetri.jpg" target="_blank" style="display:block;height:120px;overflow:hidden;background:#f1f5f9;">
+                    <img src="screenshots/01_web/04_web_live_monitoring_telemetri.jpg" alt="Web Live" style="width:100%;height:100%;object-fit:cover;object-position:top;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;">Web SCADA</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Live Monitoring &amp; Gauges</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="web" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/01_web/05_web_neraca_massa_biogas.jpg" target="_blank" style="display:block;height:120px;overflow:hidden;background:#f1f5f9;">
+                    <img src="screenshots/01_web/05_web_neraca_massa_biogas.jpg" alt="Web Balance" style="width:100%;height:100%;object-fit:cover;object-position:top;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;">Web SCADA</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Neraca Massa Biogas</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="web" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/01_web/06_web_sensor_katup_15_node.jpg" target="_blank" style="display:block;height:120px;overflow:hidden;background:#f1f5f9;">
+                    <img src="screenshots/01_web/06_web_sensor_katup_15_node.jpg" alt="Web Nodes" style="width:100%;height:100%;object-fit:cover;object-position:top;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;">Web SCADA</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Inventaris 15 Node &amp; Katup</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="web" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/01_web/07_web_kualitas_gas_metana.jpg" target="_blank" style="display:block;height:120px;overflow:hidden;background:#f1f5f9;">
+                    <img src="screenshots/01_web/07_web_kualitas_gas_metana.jpg" alt="Web Gas Quality" style="width:100%;height:100%;object-fit:cover;object-position:top;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;">Web SCADA</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Kualitas Gas &amp; Odorisasi</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="web" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/01_web/08_web_insiden_tiket_lapangan.jpg" target="_blank" style="display:block;height:120px;overflow:hidden;background:#f1f5f9;">
+                    <img src="screenshots/01_web/08_web_insiden_tiket_lapangan.jpg" alt="Web Incidents" style="width:100%;height:100%;object-fit:cover;object-position:top;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;">Web SCADA</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Manajemen Insiden Lapangan</div>
+                  </div>
+                </div>
+
+                <!-- Mobile Warga Screenshots (Native Viewport) -->
+                <div class="gallery-item" data-category="warga" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/02_mobile_warga/01_mobile_warga_tab1_beranda.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/02_mobile_warga/01_mobile_warga_tab1_beranda.jpg" alt="Mobile Warga Beranda" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag up" style="font-size:9px;padding:1px 5px;background:#ecfdf5;color:#059669;border-color:#a7f3d0;">Mobile Warga</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Beranda &bull; Meteran &amp; Iuran</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="warga" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/02_mobile_warga/02_mobile_warga_tab1_beranda_kontrol.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/02_mobile_warga/02_mobile_warga_tab1_beranda_kontrol.jpg" alt="Mobile Warga Kontrol" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag up" style="font-size:9px;padding:1px 5px;background:#ecfdf5;color:#059669;border-color:#a7f3d0;">Mobile Warga</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Kontrol Katup Mandiri Rumah</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="warga" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/02_mobile_warga/03_mobile_warga_tab2_telemetri.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/02_mobile_warga/03_mobile_warga_tab2_telemetri.jpg" alt="Mobile Warga Telemetri" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag up" style="font-size:9px;padding:1px 5px;background:#ecfdf5;color:#059669;border-color:#a7f3d0;">Mobile Warga</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Telemetri Jalur Biogas RT 23</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="warga" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/02_mobile_warga/04_mobile_warga_tab3_lapor.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/02_mobile_warga/04_mobile_warga_tab3_lapor.jpg" alt="Mobile Warga Lapor" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag up" style="font-size:9px;padding:1px 5px;background:#ecfdf5;color:#059669;border-color:#a7f3d0;">Mobile Warga</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Lapor Bau Gas Geotag GPS</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="warga" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/02_mobile_warga/05_mobile_warga_tab4_profil.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/02_mobile_warga/05_mobile_warga_tab4_profil.jpg" alt="Mobile Warga Profil" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag up" style="font-size:9px;padding:1px 5px;background:#ecfdf5;color:#059669;border-color:#a7f3d0;">Mobile Warga</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Profil Sambungan SR-0142</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="warga" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/02_mobile_warga/06_mobile_warga_akun_umkm.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/02_mobile_warga/06_mobile_warga_akun_umkm.jpg" alt="Mobile Warga UMKM" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag up" style="font-size:9px;padding:1px 5px;background:#ecfdf5;color:#059669;border-color:#a7f3d0;">Mobile Warga</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Akun UMKM (Tarif Rp 25k)</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="warga" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/02_mobile_warga/07_mobile_warga_isolasi_darurat.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/02_mobile_warga/07_mobile_warga_isolasi_darurat.jpg" alt="Mobile Warga Isolasi" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag up" style="font-size:9px;padding:1px 5px;background:#fef2f2;color:#dc2626;border-color:#fecaca;">Mobile Warga</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Peringatan Isolasi Darurat</div>
+                  </div>
+                </div>
+
+                <!-- Mobile Admin Screenshots (Native Viewport) -->
+                <div class="gallery-item" data-category="admin" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/03_mobile_admin/01_mobile_admin_tab1_ringkasan.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/03_mobile_admin/01_mobile_admin_tab1_ringkasan.jpg" alt="Mobile Admin Ringkasan" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;background:#0F3B2F;color:#ffffff;">Mobile Admin</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Ringkasan &bull; Gauge 96,2%</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="admin" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/03_mobile_admin/02_mobile_admin_tab1_emisi_keuangan.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/03_mobile_admin/02_mobile_admin_tab1_emisi_keuangan.jpg" alt="Mobile Admin Emisi" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;background:#0F3B2F;color:#ffffff;">Mobile Admin</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Grafik Emisi &amp; Rekap Finansial</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="admin" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/03_mobile_admin/03_mobile_admin_tab2_pelanggan.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/03_mobile_admin/03_mobile_admin_tab2_pelanggan.jpg" alt="Mobile Admin Pelanggan" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;background:#0F3B2F;color:#ffffff;">Mobile Admin</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Daftar Pelanggan RT &amp; UMKM</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="admin" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/03_mobile_admin/04_mobile_admin_modal_detail_pelanggan.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/03_mobile_admin/04_mobile_admin_modal_detail_pelanggan.jpg" alt="Mobile Admin Modal Cust" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;background:#0F3B2F;color:#ffffff;">Mobile Admin</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Modal Rincian &amp; Baterai IoT</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="admin" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/03_mobile_admin/05_mobile_admin_tab3_pipa_katup.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/03_mobile_admin/05_mobile_admin_tab3_pipa_katup.jpg" alt="Mobile Admin Katup" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;background:#0F3B2F;color:#ffffff;">Mobile Admin</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Pipa &amp; Katup 15 Node SCADA</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="admin" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/03_mobile_admin/06_mobile_admin_modal_kendali_katup.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/03_mobile_admin/06_mobile_admin_modal_kendali_katup.jpg" alt="Mobile Admin Modal Katup" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;background:#0F3B2F;color:#ffffff;">Mobile Admin</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Kendali Katup Listrik SS304</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="admin" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/03_mobile_admin/07_mobile_admin_tab4_tiket_lapangan.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/03_mobile_admin/07_mobile_admin_tab4_tiket_lapangan.jpg" alt="Mobile Admin Tiket" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;background:#0F3B2F;color:#ffffff;">Mobile Admin</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Daftar Tiket Pengaduan Warga</div>
+                  </div>
+                </div>
+
+                <div class="gallery-item" data-category="admin" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+                  <a href="screenshots/03_mobile_admin/08_mobile_admin_modal_detail_tiket.jpg" target="_blank" style="display:block;height:140px;overflow:hidden;background:#f1f5f9;text-align:center;">
+                    <img src="screenshots/03_mobile_admin/08_mobile_admin_modal_detail_tiket.jpg" alt="Mobile Admin Modal Tiket" style="width:auto;height:100%;max-width:100%;object-fit:contain;" loading="lazy">
+                  </a>
+                  <div style="padding:8px 10px;flex:1;">
+                    <span class="tag" style="font-size:9px;padding:1px 5px;background:#0F3B2F;color:#ffffff;">Mobile Admin</span>
+                    <div style="font-weight:700;font-size:11px;color:#0f172a;margin-top:4px;">Modal Penugasan Teknisi DLH</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- TOP 4 KPI CARDS -->
         <div class="kpi-row-4">
           <!-- KPI 1: Status Node -->
@@ -347,6 +676,24 @@ window.MB = window.MB || {};
 
     container.innerHTML = html;
 
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
     // Attach button listeners
     container.querySelectorAll('[data-view-node]').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -521,6 +868,24 @@ window.MB = window.MB || {};
     `;
 
     container.innerHTML = html;
+
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
 
     // Attach search and filter listeners
     var searchInput = container.querySelector('#liveSearchInput');
@@ -749,6 +1114,24 @@ window.MB = window.MB || {};
 
     container.innerHTML = html;
 
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
     container.querySelectorAll('[data-edit-node]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var id = this.getAttribute('data-edit-node');
@@ -799,6 +1182,24 @@ window.MB = window.MB || {};
     `;
 
     container.innerHTML = html;
+
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
 
     // Init Leaflet map
     setTimeout(function () {
@@ -1546,6 +1947,24 @@ window.MB = window.MB || {};
     `;
 
     container.innerHTML = html;
+
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
   }
 
   /* -----------------------------------------------------------
@@ -1744,6 +2163,24 @@ window.MB = window.MB || {};
     `;
 
     container.innerHTML = html;
+
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
   }
 
   /* -----------------------------------------------------------
@@ -2028,6 +2465,24 @@ window.MB = window.MB || {};
 
     container.innerHTML = html;
 
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
     // Filter Buttons logic
     var rtBtns = container.querySelectorAll('#customerRtFilterGroup .btn-filter');
     var rows = container.querySelectorAll('#customersTable .customer-row');
@@ -2205,6 +2660,24 @@ window.MB = window.MB || {};
 
     container.innerHTML = html;
 
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
     // Filter tabs for Incidents
     var incFilters = container.querySelectorAll('#incidentFilterGroup .btn-filter');
     var incRows = container.querySelectorAll('#incidentsTable .incident-row');
@@ -2329,6 +2802,24 @@ window.MB = window.MB || {};
     `;
 
     container.innerHTML = html;
+
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
   }
 
   /* -----------------------------------------------------------
@@ -2390,6 +2881,24 @@ window.MB = window.MB || {};
     `;
 
     container.innerHTML = html;
+
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
 
     var btnExp = container.querySelector('#btnExportTelemetryCsv');
     if (btnExp) {
@@ -2599,6 +3108,24 @@ window.MB = window.MB || {};
     `;
 
     container.innerHTML = html;
+
+    // Filter tabs for Ecosystem Gallery Showcase (Web SCADA, Mobile Warga & Mobile Admin)
+    var galleryFilters = container.querySelectorAll('#galleryTabGroup .btn-filter');
+    var galleryItems = container.querySelectorAll('#ecosystemGalleryGrid .gallery-item');
+    galleryFilters.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        galleryFilters.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var cat = this.getAttribute('data-gallery-tab');
+        galleryItems.forEach(function (item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
 
     var form = container.querySelector('#thresholdForm');
     if (form) {
