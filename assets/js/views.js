@@ -1917,8 +1917,8 @@ window.MB = window.MB || {};
                         stroke-dasharray="265.95 300" />
                   
                   <!-- Center Percentage Text -->
-                  <text x="130" y="98" text-anchor="middle" font-size="28" font-weight="700" fill="#0f172a" font-family="'JetBrains Mono', monospace">96,2%</text>
-                  <text x="130" y="117" text-anchor="middle" font-size="10" fill="#64748b" font-family="'Inter', sans-serif">Standar minimum 90%</text>
+                  <text x="130" y="92" text-anchor="middle" font-size="28" font-weight="700" fill="#0f172a" font-family="'Inter', sans-serif">96,2%</text>
+                  <text x="130" y="124" text-anchor="middle" font-size="10" fill="#64748b" font-family="'Inter', sans-serif">Standar minimum 90%</text>
                 </svg>
               </div>
             </div>

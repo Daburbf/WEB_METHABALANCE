@@ -1,6 +1,7 @@
 /**
- * Script Otomatisasi Screenshot Full-Feature METHABALANCE (Web, Mobile Warga & Mobile Admin)
- * Format: High-Quality JPEG (.jpg), 1 per 1 tanpa terpotong
+ * Script Screenshot METHABALANCE (Format JPEG Quality 95)
+ * Mobile di-capture menggunakan Viewport Native Smartphone (fullPage: false)
+ * Tidak ada fixed navbar yang tabrakan atau menimpa konten.
  */
 
 const fs = require('fs');
@@ -17,10 +18,20 @@ const DIRS = {
   admin: path.join(OUT_DIR, '03_mobile_admin')
 };
 
-// Buat direktori jika belum ada
-Object.values(DIRS).forEach(dir => {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+// Pastikan folder bersih untuk mobile warga dan admin
+[DIRS.warga, DIRS.admin].forEach(dir => {
+  if (fs.existsSync(dir)) {
+    fs.readdirSync(dir).forEach(file => {
+      fs.unlinkSync(path.join(dir, file));
+    });
+  } else {
+    fs.mkdirSync(dir, { recursive: true });
+  }
 });
+
+if (!fs.existsSync(DIRS.web)) {
+  fs.mkdirSync(DIRS.web, { recursive: true });
+}
 
 async function run() {
   console.log('🚀 Memulai browser headless Microsoft Edge...');
@@ -32,8 +43,7 @@ async function run() {
 
   const page = await browser.newPage();
 
-  // Helper screenshot JPG
-  async function takeJpg(filepath, fullPage = true) {
+  async function takeJpg(filepath, fullPage = false) {
     await page.screenshot({
       path: filepath,
       type: 'jpeg',
@@ -44,107 +54,120 @@ async function run() {
   }
 
   /* ==========================================================================
-     1. WEB PLATFORM SCREENSHOTS (Viewport: 1600 x 1000, Full Page Views)
+     1. WEB PLATFORM (Viewport Desktop 1600 x 1000)
      ========================================================================== */
-  console.log('\n📸 Mengambil screenshot fitur WEB PLATFORM...');
+  console.log('\n📸 Verifikasi screenshot fitur WEB PLATFORM...');
   await page.setViewport({ width: 1600, height: 1000, deviceScaleFactor: 1 });
   await page.goto(`${BASE_URL}/#overview`, { waitUntil: 'networkidle0' });
   await new Promise(r => setTimeout(r, 1200));
 
-  // 1.1 Web Overview / Dashboard SCADA
   await page.evaluate(() => { window.MB.views.navigate('overview'); });
-  await new Promise(r => setTimeout(r, 1200));
+  await new Promise(r => setTimeout(r, 800));
   await takeJpg(path.join(DIRS.web, '01_web_dashboard_scada_ringkasan.jpg'), true);
 
-  // 1.2 Web GIS & Topologi Jalur Pipa
   await page.evaluate(() => { window.MB.views.navigate('gis'); });
-  await new Promise(r => setTimeout(r, 1500));
+  await new Promise(r => setTimeout(r, 1200));
   await takeJpg(path.join(DIRS.web, '02_web_gis_topologi_jalur_pipa.jpg'), true);
 
-  // 1.3 Web Analytics Pelanggan & Emisi Karbon (Lovable Style)
   await page.evaluate(() => { window.MB.views.navigate('analytics'); });
-  await new Promise(r => setTimeout(r, 1200));
+  await new Promise(r => setTimeout(r, 1000));
   await takeJpg(path.join(DIRS.web, '03_web_analytics_pelanggan_karbon.jpg'), true);
 
-  // 1.4 Web Live Monitoring & Telemetri Real-time
   await page.evaluate(() => { window.MB.views.navigate('live'); });
-  await new Promise(r => setTimeout(r, 1200));
+  await new Promise(r => setTimeout(r, 1000));
   await takeJpg(path.join(DIRS.web, '04_web_live_monitoring_telemetri.jpg'), true);
 
-  // 1.5 Web Neraca Massa Biogas & Losses
   await page.evaluate(() => { window.MB.views.navigate('mass-balance'); });
-  await new Promise(r => setTimeout(r, 1200));
+  await new Promise(r => setTimeout(r, 1000));
   await takeJpg(path.join(DIRS.web, '05_web_neraca_massa_biogas.jpg'), true);
 
-  // 1.6 Web Sensor & Status Katup 15 Node
   await page.evaluate(() => { window.MB.views.navigate('nodes'); });
-  await new Promise(r => setTimeout(r, 1200));
+  await new Promise(r => setTimeout(r, 1000));
   await takeJpg(path.join(DIRS.web, '06_web_sensor_katup_15_node.jpg'), true);
 
-  // 1.7 Web Kualitas Gas Metana & Odorisasi
   await page.evaluate(() => { window.MB.views.navigate('gas-quality'); });
-  await new Promise(r => setTimeout(r, 1200));
+  await new Promise(r => setTimeout(r, 1000));
   await takeJpg(path.join(DIRS.web, '07_web_kualitas_gas_metana.jpg'), true);
 
-  // 1.8 Web Insiden & Tiket Laporan Warga
   await page.evaluate(() => { window.MB.views.navigate('incidents'); });
-  await new Promise(r => setTimeout(r, 1200));
+  await new Promise(r => setTimeout(r, 1000));
   await takeJpg(path.join(DIRS.web, '08_web_insiden_tiket_lapangan.jpg'), true);
 
   /* ==========================================================================
-     2. MOBILE WARGA SCREENSHOTS (Viewport: 430 x 932)
+     2. MOBILE WARGA (NATIVE VIEWPORT 430 x 932 — fullPage: false)
+     Navbar tetap rapi di bagian bawah frame tanpa tabrakan.
      ========================================================================== */
-  console.log('\n📸 Mengambil screenshot fitur MOBILE WARGA...');
+  console.log('\n📸 Mengambil screenshot fitur MOBILE WARGA (Native Smartphone View)...');
   await page.setViewport({ width: 430, height: 932, deviceScaleFactor: 2 });
   await page.goto(`${BASE_URL}/methabalance-mobile-warga/index.html`, { waitUntil: 'networkidle0' });
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 1200));
 
-  // 2.1 Tab 1: Beranda Warga Utuh (Normal)
-  await takeJpg(path.join(DIRS.warga, '01_mobile_warga_tab1_beranda_full.jpg'), true);
+  // Pastikan akun warga dan state normal
+  await page.evaluate(() => {
+    if (window.MBM && window.MBM.data) {
+      window.MBM.data.setActiveAccountKey('warga');
+      window.MBM.data.setGridState('NORMAL');
+    }
+  });
+  await new Promise(r => setTimeout(r, 600));
 
-  // 2.2 Tab 2: Telemetri Warga Utuh
+  // 2.1 Tab 1: Beranda Warga (View Atas)
+  await takeJpg(path.join(DIRS.warga, '01_mobile_warga_tab1_beranda.jpg'), false);
+
+  // 2.2 Tab 1: Beranda Warga (Scroll ke Bawah)
+  await page.evaluate(() => { window.scrollTo({ top: 380, behavior: 'instant' }); });
+  await new Promise(r => setTimeout(r, 600));
+  await takeJpg(path.join(DIRS.warga, '02_mobile_warga_tab1_beranda_kontrol.jpg'), false);
+
+  // Scroll kembali ke atas
+  await page.evaluate(() => { window.scrollTo({ top: 0, behavior: 'instant' }); });
+  await new Promise(r => setTimeout(r, 400));
+
+  // 2.3 Tab 2: Telemetri Warga
   await page.evaluate(() => {
     const tab = document.querySelector('[data-tab="telemetri"]');
     if (tab) tab.click();
   });
   await new Promise(r => setTimeout(r, 800));
-  await takeJpg(path.join(DIRS.warga, '02_mobile_warga_tab2_telemetri_full.jpg'), true);
+  await takeJpg(path.join(DIRS.warga, '03_mobile_warga_tab2_telemetri.jpg'), false);
 
-  // 2.3 Tab 3: Lapor Warga Utuh
+  // 2.4 Tab 3: Lapor Warga
   await page.evaluate(() => {
     const tab = document.querySelector('[data-tab="lapor"]');
     if (tab) tab.click();
   });
   await new Promise(r => setTimeout(r, 800));
-  await takeJpg(path.join(DIRS.warga, '03_mobile_warga_tab3_lapor_full.jpg'), true);
+  await takeJpg(path.join(DIRS.warga, '04_mobile_warga_tab3_lapor.jpg'), false);
 
-  // 2.4 Tab 4: Profil Warga Utuh
+  // 2.5 Tab 4: Profil Warga
   await page.evaluate(() => {
     const tab = document.querySelector('[data-tab="profil"]');
     if (tab) tab.click();
   });
   await new Promise(r => setTimeout(r, 800));
-  await takeJpg(path.join(DIRS.warga, '04_mobile_warga_tab4_profil_full.jpg'), true);
+  await takeJpg(path.join(DIRS.warga, '05_mobile_warga_tab4_profil.jpg'), false);
 
-  // 2.5 Switcher Akun ke UMKM Tahu & Tempe
+  // 2.6 Beralih ke Akun UMKM Tahu & Tempe (Tarif Rp 25.000 / Bulan)
   await page.evaluate(() => {
     const btnSelectUmkm = document.getElementById('btnSelectUmkm');
     if (btnSelectUmkm) btnSelectUmkm.click();
     const tabBeranda = document.querySelector('[data-tab="beranda"]');
     if (tabBeranda) tabBeranda.click();
+    window.scrollTo({ top: 0, behavior: 'instant' });
   });
   await new Promise(r => setTimeout(r, 800));
-  await takeJpg(path.join(DIRS.warga, '05_mobile_warga_beranda_akun_umkm.jpg'), true);
+  await takeJpg(path.join(DIRS.warga, '06_mobile_warga_akun_umkm.jpg'), false);
 
-  // 2.6 Simulasi Kondisi Pipa Terisolasi Darurat
+  // 2.7 Simulasi Kondisi Pipa Terisolasi Darurat (Banner Merah)
   await page.evaluate(() => {
     const btnIsolated = document.getElementById('btnSetGridIsolated');
     if (btnIsolated) btnIsolated.click();
+    window.scrollTo({ top: 0, behavior: 'instant' });
   });
   await new Promise(r => setTimeout(r, 800));
-  await takeJpg(path.join(DIRS.warga, '06_mobile_warga_kondisi_isolasi_darurat.jpg'), true);
+  await takeJpg(path.join(DIRS.warga, '07_mobile_warga_isolasi_darurat.jpg'), false);
 
-  // Reset state kembali ke normal
+  // Reset ke normal
   await page.evaluate(() => {
     const btnNormal = document.getElementById('btnSetGridNormal');
     if (btnNormal) btnNormal.click();
@@ -153,30 +176,40 @@ async function run() {
   });
 
   /* ==========================================================================
-     3. MOBILE ADMIN SCREENSHOTS (Viewport: 430 x 932)
+     3. MOBILE ADMIN (NATIVE VIEWPORT 430 x 932 — fullPage: false)
+     Semua gauge, card, dan navbar rapi, tidak bertabrakan.
      ========================================================================== */
-  console.log('\n📸 Mengambil screenshot fitur MOBILE ADMIN...');
+  console.log('\n📸 Mengambil screenshot fitur MOBILE ADMIN (Native Smartphone View)...');
   await page.goto(`${BASE_URL}/methabalance-mobile-admin/index.html`, { waitUntil: 'networkidle0' });
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 1200));
 
-  // 3.1 Tab 1: Ringkasan Admin Utuh
-  await takeJpg(path.join(DIRS.admin, '01_mobile_admin_tab1_ringkasan_full.jpg'), true);
+  // 3.1 Tab 1: Ringkasan Admin (KPI & Gauge 96,2% yang rapi dan terpisah)
+  await takeJpg(path.join(DIRS.admin, '01_mobile_admin_tab1_ringkasan.jpg'), false);
 
-  // 3.2 Tab 2: Pelanggan Admin Utuh
+  // 3.2 Tab 1: Ringkasan Admin (Scroll ke Grafik Emisi & Rekap Finansial)
+  await page.evaluate(() => { window.scrollTo({ top: 320, behavior: 'instant' }); });
+  await new Promise(r => setTimeout(r, 600));
+  await takeJpg(path.join(DIRS.admin, '02_mobile_admin_tab1_emisi_keuangan.jpg'), false);
+
+  // Scroll kembali ke atas
+  await page.evaluate(() => { window.scrollTo({ top: 0, behavior: 'instant' }); });
+  await new Promise(r => setTimeout(r, 400));
+
+  // 3.3 Tab 2: Pelanggan Admin
   await page.evaluate(() => {
     const tab = document.querySelector('[data-tab="pelanggan"]');
     if (tab) tab.click();
   });
   await new Promise(r => setTimeout(r, 800));
-  await takeJpg(path.join(DIRS.admin, '02_mobile_admin_tab2_pelanggan_full.jpg'), true);
+  await takeJpg(path.join(DIRS.admin, '03_mobile_admin_tab2_pelanggan.jpg'), false);
 
-  // 3.3 Modal Detail Pelanggan
+  // 3.4 Modal Detail Pelanggan
   await page.evaluate(() => {
     const firstCust = document.querySelector('.customer-item-card');
     if (firstCust) firstCust.click();
   });
   await new Promise(r => setTimeout(r, 600));
-  await takeJpg(path.join(DIRS.admin, '03_mobile_admin_modal_detail_pelanggan.jpg'), false);
+  await takeJpg(path.join(DIRS.admin, '04_mobile_admin_modal_detail_pelanggan.jpg'), false);
 
   // Tutup modal
   await page.evaluate(() => {
@@ -185,21 +218,21 @@ async function run() {
   });
   await new Promise(r => setTimeout(r, 400));
 
-  // 3.4 Tab 3: Pipa & Katup Admin Utuh
+  // 3.5 Tab 3: Pipa & Katup SCADA
   await page.evaluate(() => {
     const tab = document.querySelector('[data-tab="pipa"]');
     if (tab) tab.click();
   });
   await new Promise(r => setTimeout(r, 800));
-  await takeJpg(path.join(DIRS.admin, '04_mobile_admin_tab3_pipa_katup_full.jpg'), true);
+  await takeJpg(path.join(DIRS.admin, '05_mobile_admin_tab3_pipa_katup.jpg'), false);
 
-  // 3.5 Modal Konfirmasi Kendali Katup Motorik
+  // 3.6 Modal Konfirmasi Kendali Katup Motorik
   await page.evaluate(() => {
     const btnQuick = document.getElementById('btnQuickEmergencyValve');
     if (btnQuick) btnQuick.click();
   });
   await new Promise(r => setTimeout(r, 600));
-  await takeJpg(path.join(DIRS.admin, '05_mobile_admin_modal_kendali_katup.jpg'), false);
+  await takeJpg(path.join(DIRS.admin, '06_mobile_admin_modal_kendali_katup.jpg'), false);
 
   // Tutup modal
   await page.evaluate(() => {
@@ -208,24 +241,24 @@ async function run() {
   });
   await new Promise(r => setTimeout(r, 400));
 
-  // 3.6 Tab 4: Tiket Lapangan Utuh
+  // 3.7 Tab 4: Tiket Lapangan
   await page.evaluate(() => {
     const tab = document.querySelector('[data-tab="tiket"]');
     if (tab) tab.click();
   });
   await new Promise(r => setTimeout(r, 800));
-  await takeJpg(path.join(DIRS.admin, '06_mobile_admin_tab4_tiket_lapangan_full.jpg'), true);
+  await takeJpg(path.join(DIRS.admin, '07_mobile_admin_tab4_tiket_lapangan.jpg'), false);
 
-  // 3.7 Modal Detail Tiket Lapangan
+  // 3.8 Modal Detail Tiket Lapangan
   await page.evaluate(() => {
     const firstTicket = document.querySelector('.ticket-item-card');
     if (firstTicket) firstTicket.click();
   });
   await new Promise(r => setTimeout(r, 600));
-  await takeJpg(path.join(DIRS.admin, '07_mobile_admin_modal_detail_tiket.jpg'), false);
+  await takeJpg(path.join(DIRS.admin, '08_mobile_admin_modal_detail_tiket.jpg'), false);
 
   await browser.close();
-  console.log('\n🎉 Selesai! Semua fitur telah berhasil disimpan dalam format .jpg beresolusi tinggi tanpa terpotong.');
+  console.log('\n🎉 Selesai! Semua screenshot mobile telah diulang menggunakan viewport native smartphone tanpa ada navbar tabrakan.');
 }
 
 run().catch(err => {
