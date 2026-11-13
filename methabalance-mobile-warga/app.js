@@ -597,7 +597,7 @@
       
       <!-- Right Axis Live Value Tag -->
       <rect x="${svgWidth - 32}" y="${(lastP.y - 7).toFixed(1)}" width="28" height="14" rx="3" fill="#059669"/>
-      <text x="${svgWidth - 18}" y="${(lastP.y + 3).toFixed(1)}" text-anchor="middle" font-size="7.5" font-family="var(--font-mono)" font-weight="700" fill="#ffffff">
+      <text x="${svgWidth - 18}" y="${(lastP.y + 3).toFixed(1)}" text-anchor="middle" font-size="8" font-family="var(--font-sans)" font-weight="700" fill="#ffffff">
         ${lastP.data.val.toFixed(1)}
       </text>
     `;
@@ -625,13 +625,13 @@
       // High / Low Peak Badge
       if (p.isMax && !isLatest) {
         svgContent += `
-          <text x="${p.x.toFixed(1)}" y="${(p.y - 6).toFixed(1)}" text-anchor="middle" font-size="8" font-family="var(--font-mono)" font-weight="700" fill="#047857">
+          <text x="${p.x.toFixed(1)}" y="${(p.y - 6).toFixed(1)}" text-anchor="middle" font-size="8" font-family="var(--font-sans)" font-weight="700" fill="#047857">
             ▲ ${p.data.val.toFixed(1)}
           </text>
         `;
       } else if (p.isMin && !isLatest) {
         svgContent += `
-          <text x="${p.x.toFixed(1)}" y="${(p.y + 11).toFixed(1)}" text-anchor="middle" font-size="8" font-family="var(--font-mono)" font-weight="700" fill="#64748b">
+          <text x="${p.x.toFixed(1)}" y="${(p.y + 11).toFixed(1)}" text-anchor="middle" font-size="8" font-family="var(--font-sans)" font-weight="700" fill="#64748b">
             ▼ ${p.data.val.toFixed(1)}
           </text>
         `;
@@ -697,14 +697,14 @@
     const yNominal = getY(4.2);
     svgContent += `
       <line x1="${padX}" y1="${yNominal}" x2="${svgWidth - padX}" y2="${yNominal}" stroke="#136f46" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6"/>
-      <text x="${padX + 2}" y="${yNominal - 3}" font-size="7.5" font-family="var(--font-mono)" fill="#136f46" font-weight="600">Nominal 4,2 kPa</text>
+      <text x="${padX + 2}" y="${yNominal - 3}" font-size="7.5" font-family="var(--font-sans)" fill="#136f46" font-weight="600">Nominal 4,2 kPa</text>
     `;
 
     // Safe lower limit guideline 2.5 kPa
     const ySafeMin = getY(2.5);
     svgContent += `
       <line x1="${padX}" y1="${ySafeMin}" x2="${svgWidth - padX}" y2="${ySafeMin}" stroke="#dc2626" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.5"/>
-      <text x="${svgWidth - padX - 2}" y="${ySafeMin - 3}" text-anchor="end" font-size="7" font-family="var(--font-mono)" fill="#dc2626">Batas Min 2,5 kPa</text>
+      <text x="${svgWidth - padX - 2}" y="${ySafeMin - 3}" text-anchor="end" font-size="7" font-family="var(--font-sans)" fill="#dc2626">Batas Min 2,5 kPa</text>
     `;
 
     // Build curve path using smooth bezier
@@ -746,7 +746,7 @@
       // Value label on cooking peak
       if (idx === 4 || idx === 10) {
         svgContent += `
-          <text x="${cx}" y="${cy - 7}" text-anchor="middle" font-size="8" font-family="var(--font-mono)" font-weight="700" fill="#047857">
+          <text x="${cx}" y="${cy - 7}" text-anchor="middle" font-size="8" font-family="var(--font-sans)" font-weight="700" fill="#047857">
             ${pt.pressure} kPa
           </text>
         `;
@@ -755,7 +755,7 @@
       // X-axis label
       if (isKeyHour) {
         svgContent += `
-          <text x="${cx}" y="${svgHeight - 8}" text-anchor="middle" font-size="7.5" font-family="var(--font-mono)" fill="#59665e">
+          <text x="${cx}" y="${svgHeight - 8}" text-anchor="middle" font-size="7.5" font-family="var(--font-sans)" fill="#59665e">
             ${pt.hour}
           </text>
         `;
