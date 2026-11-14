@@ -48,6 +48,14 @@
     // Tab 4: Tiket Lapangan
     el.ticketListContainer = document.getElementById('ticketListContainer');
 
+    // Tab 5: AI Assistant
+    el.btnHeaderAi = document.getElementById('btnHeaderAi');
+    el.btnResetAdminAiChat = document.getElementById('btnResetAdminAiChat');
+    el.adminAiChipsBar = document.getElementById('adminAiChipsBar');
+    el.adminAiChatStream = document.getElementById('adminAiChatStream');
+    el.adminAiChatForm = document.getElementById('adminAiChatForm');
+    el.adminAiInput = document.getElementById('adminAiInput');
+
     // Modals
     el.customerModal = document.getElementById('customerModal');
     el.valveModal = document.getElementById('valveModal');
@@ -78,6 +86,11 @@
   }
 
   function switchTab(tabId) {
+    if (adminLeafletMap) {
+      setTimeout(() => {
+        adminLeafletMap.invalidateSize();
+      }, 250);
+    }
     state.activeTab = tabId;
     el.tabButtons.forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
@@ -93,6 +106,10 @@
       renderNodesList();
     } else if (tabId === 'tiket') {
       renderTicketList();
+    } else if (tabId === 'ai') {
+      if (el.adminAiChatStream) {
+        el.adminAiChatStream.scrollTop = el.adminAiChatStream.scrollHeight;
+      }
     }
   }
 
@@ -274,6 +291,135 @@
   /* ==========================================================================
      TAB 3: PIPA & KATUP SCADA
      ========================================================================== */
+  
+  let adminLeafletMap = null;
+  const adminNodeMarkers = {};
+
+  function initAdminGisMap() {
+    const mapEl = document.getElementById('adminLeafletMap');
+    if (!mapEl || typeof L === 'undefined') return;
+
+    if (adminLeafletMap) {
+      adminLeafletMap.remove();
+      adminLeafletMap = null;
+    }
+
+    try {
+      adminLeafletMap = L.map('adminLeafletMap', {
+        center: [-1.2105, 116.9405],
+        zoom: 15,
+        zoomControl: true,
+        attributionControl: false
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        minZoom: 12
+      }).addTo(adminLeafletMap);
+
+      const bounds = [];
+      const topology = D.getPipelineTopology ? D.getPipelineTopology() : null;
+
+      if (topology && topology.trunkCoords) {
+        topology.trunkCoords.forEach(pt => bounds.push(pt));
+        L.polyline(topology.trunkCoords, {
+          color: '#059669',
+          weight: 4.8,
+          opacity: 0.95,
+          lineCap: 'round',
+          lineJoin: 'round'
+        }).addTo(adminLeafletMap).bindTooltip('Jalur Pipa Induk Transmisi Utama (DN80) DLH Manggar', { sticky: true });
+
+        L.polyline(topology.trunkCoords, {
+          color: '#34d399',
+          weight: 2,
+          opacity: 0.9,
+          dashArray: '6, 12'
+        }).addTo(adminLeafletMap);
+      }
+
+      if (topology && topology.branches) {
+        topology.branches.forEach(b => {
+          b.coords.forEach(pt => bounds.push(pt));
+          L.polyline(b.coords, {
+            color: '#059669',
+            weight: 3.5,
+            opacity: 0.9,
+            lineCap: 'round',
+            lineJoin: 'round'
+          }).addTo(adminLeafletMap).bindTooltip(b.name || 'Cabang Distribusi', { sticky: true });
+
+          L.polyline(b.coords, {
+            color: '#34d399',
+            weight: 1.6,
+            opacity: 0.85,
+            dashArray: '5, 10'
+          }).addTo(adminLeafletMap);
+        });
+      }
+
+      // Add markers for the 5 nodes
+      state.nodesState.forEach(node => {
+        if (!node.lat || !node.lng) return;
+        bounds.push([node.lat, node.lng]);
+
+        const isClosed = node.valve === 'CLOSED';
+        const numLabel = node.id.replace('Node-0', '').replace('Node-', '');
+
+        const icon = L.divIcon({
+          className: 'valve-div-marker-wrapper',
+          html: `<div class="valve-marker ${isClosed ? 'closed' : 'open'}" data-node-id="${node.id}" title="${node.name} (${node.valve})">
+                   <span>${numLabel}</span>
+                 </div>`,
+          iconSize: [26, 26],
+          iconAnchor: [13, 13]
+        });
+
+        const marker = L.marker([node.lat, node.lng], { icon }).addTo(adminLeafletMap);
+        marker.bindTooltip(`<strong>${node.id} | ${node.name}</strong><br>Status: <span style="color:${isClosed ? '#ef4444' : '#10b981'};font-weight:700;">${node.valve}</span> | Tekanan: ${node.pressure} kPa<br><small style="color:#059669;font-weight:600;">Klik untuk Tutup/Buka Katup (Akses Teknisi)</small>`, {
+          direction: 'top',
+          offset: [0, -10]
+        });
+
+        marker.on('click', () => {
+          openValveConfirmModal(node.id);
+        });
+
+        adminNodeMarkers[node.id] = marker;
+      });
+
+      if (bounds.length > 0) {
+        adminLeafletMap.fitBounds(bounds, { padding: [20, 20] });
+      }
+
+      updateAdminMapCounts();
+
+      // Multi-interval invalidateSize agar garis langsung tampil utuh
+      [60, 150, 350, 700].forEach(ms => {
+        setTimeout(() => {
+          if (adminLeafletMap) {
+            adminLeafletMap.invalidateSize();
+            if (ms === 150 && bounds.length > 0) {
+              adminLeafletMap.fitBounds(bounds, { padding: [20, 20] });
+            }
+          }
+        }, ms);
+      });
+
+    } catch (err) {
+      console.error('Error initializing admin GIS map:', err);
+    }
+  }
+
+  function updateAdminMapCounts() {
+    const openCount = state.nodesState.filter(n => n.valve === 'OPEN').length;
+    const closedCount = state.nodesState.filter(n => n.valve === 'CLOSED').length;
+    const openEl = document.getElementById('adminMapOpenCount');
+    const closedEl = document.getElementById('adminMapClosedCount');
+    if (openEl) openEl.textContent = openCount;
+    if (closedEl) closedEl.textContent = closedCount;
+  }
+
   function renderNodesList() {
     if (!el.nodesListContainer) return;
 
@@ -284,9 +430,9 @@
             <div class="node-id-tag ${n.type === 'upstream' ? 'tag-hulu' : ''}">${n.id}</div>
             <div class="node-name-text">${n.name}</div>
           </div>
-          <div class="node-valve-badge ${n.valve === 'OPEN' ? 'valve-open' : 'valve-closed'}">
-            ${n.valve === 'OPEN' ? 'KATUP BUKA' : 'KATUP TERTUTUP'}
-          </div>
+          <span style="font-size:0.75rem;font-weight:700;color:${n.valve === 'OPEN' ? '#059669' : '#dc2626'};">
+            ${n.valve === 'OPEN' ? 'Terbuka' : 'Tertutup'}
+          </span>
         </div>
 
         <div class="node-metric-grid">
@@ -360,12 +506,35 @@
 
     const newStatus = node.valve === 'OPEN' ? 'CLOSED' : 'OPEN';
     node.valve = newStatus;
-    node.pressure = newStatus === 'CLOSED' ? 0.2 : (node.id === 'Node-06' ? 4.2 : 4.5);
+    node.pressure = newStatus === 'CLOSED' ? 0.0 : (node.id === 'Node-01' ? 4.8 : 4.5);
+    node.flow = newStatus === 'CLOSED' ? 0.0 : (node.id === 'Node-01' ? 124.5 : 32.0);
 
+    // Update GIS Map Marker immediately
+    const marker = adminNodeMarkers[node.id];
+    if (marker && typeof L !== 'undefined') {
+      const isClosed = newStatus === 'CLOSED';
+      const numLabel = node.id.replace('Node-0', '').replace('Node-', '');
+      const icon = L.divIcon({
+        className: 'valve-div-marker-wrapper',
+        html: `<div class="valve-marker ${isClosed ? 'closed' : 'open'}" data-node-id="${node.id}" title="${node.name} (${node.valve})">
+                 <span>${numLabel}</span>
+               </div>`,
+        iconSize: [26, 26],
+        iconAnchor: [13, 13]
+      });
+      marker.setIcon(icon);
+      marker.bindTooltip(`<strong>${node.id} &bull; ${node.name}</strong><br>Status: <span style="color:${isClosed ? '#ef4444' : '#10b981'};font-weight:700;">${node.valve}</span> &bull; Tekanan: ${node.pressure} kPa<br><small style="color:#059669;font-weight:600;">Klik untuk Tutup/Buka Katup (Akses Teknisi)</small>`, {
+        direction: 'top',
+        offset: [0, -10]
+      });
+    }
+
+    updateAdminMapCounts();
     renderNodesList();
     el.valveModal.classList.remove('active');
 
-    showToast(`Perintah katup ${node.id} berhasil dieksekusi: Status kini ${newStatus}`);
+    const actionText = newStatus === 'CLOSED' ? 'DITUTUP (ISOLASI ALIRAN DARURAT)' : 'DIBUKA KEMBALI (ALIRAN NORMAL)';
+    showToast(`Perintah Sukses: Katup ${node.id} berhasil ${actionText} oleh Teknisi Lapangan.`);
   }
 
   /* ==========================================================================
@@ -473,6 +642,292 @@
     }
   }
 
+  
+  /* ==========================================================================
+     TAB 5: AI ASSISTANT LOGIC & REASONING ENGINE
+     ========================================================================== */
+  function initAiAssistant() {
+    if (el.btnHeaderAi) {
+      el.btnHeaderAi.addEventListener('click', () => {
+        switchTab('ringkasan');
+      });
+    }
+
+    if (el.btnResetAdminAiChat) {
+      el.btnResetAdminAiChat.addEventListener('click', () => {
+        resetAdminAiChat();
+        showToast('Percakapan AI Assistant telah dibersihkan.');
+      });
+    }
+
+    if (el.adminAiChipsBar) {
+      el.adminAiChipsBar.addEventListener('click', (e) => {
+        const chip = e.target.closest('.ai-chip-btn');
+        if (!chip) return;
+        const q = chip.getAttribute('data-query');
+        if (q) handleAiSubmit(q);
+      });
+    }
+
+    if (el.adminAiChatForm) {
+      el.adminAiChatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!el.adminAiInput) return;
+        const q = el.adminAiInput.value.trim();
+        if (q) {
+          handleAiSubmit(q);
+          el.adminAiInput.value = '';
+        }
+      });
+    }
+
+    // Populate initial welcome message
+    resetAdminAiChat();
+  }
+
+  function resetAdminAiChat() {
+    if (!el.adminAiChatStream) return;
+    el.adminAiChatStream.innerHTML = '';
+    appendAiMessage({
+      sender: 'assistant',
+      title: 'Halo Administrator TPAS Manggar',
+      time: 'Live SCADA',
+      contentHtml: `
+        Saya asisten cerdas operasional jaringan biogas TPAS Manggar & DLH Balikpapan. Saya terhubung langsung ke telemetri neraca massa pipa, sensor gas CH₄, katup motorik GIS, SOP teknis kuras siphon, serta data penagihan iuran.
+        <ul>
+          <li><strong>Neraca Massa:</strong> Inflow 142,6 Nm³/h, Outflow 135,2 Nm³/h (Delta 5,18%)</li>
+          <li><strong>Katup GIS:</strong> 5 Unit Motorized Ball Valve (3 Buka, 2 Siaga)</li>
+          <li><strong>Kualitas Gas:</strong> CH₄ 56,4% Vol (Api Biru pembakaran optimal)</li>
+          <li><strong>Iuran Bulanan:</strong> RT Rp 10.000 / bln, UMKM Rp 25.000 / bln (25k)</li>
+        </ul>
+        Pilih topik cepat di atas atau ajukan pertanyaan spesifik di bawah.
+      `
+    });
+  }
+
+  function handleAiSubmit(query) {
+    if (!el.adminAiChatStream) return;
+
+    // 1. Append user message
+    appendAiMessage({
+      sender: 'user',
+      text: query
+    });
+
+    // 2. Generate response based on domain data
+    const response = evaluateAdminAiQuery(query);
+
+    // 3. Append bot response after minor realistic latency
+    setTimeout(() => {
+      appendAiMessage({
+        sender: 'assistant',
+        title: response.title,
+        time: 'Baru saja',
+        contentHtml: response.contentHtml,
+        actionLabel: response.actionLabel,
+        actionTab: response.actionTab
+      });
+    }, 250);
+  }
+
+  function appendAiMessage(data) {
+    if (!el.adminAiChatStream) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'ai-msg ' + (data.sender === 'user' ? 'user' : 'assistant');
+
+    if (data.sender === 'user') {
+      wrap.innerHTML = `<div class="ai-bubble-user">${escapeHtml(data.text)}</div>`;
+    } else {
+      let actionHtml = '';
+      if (data.actionLabel && data.actionTab) {
+        actionHtml = `
+          <div class="ai-bot-action-box">
+            <button type="button" class="ai-action-btn" data-action-tab="${data.actionTab}">
+              ${data.actionLabel}
+            </button>
+          </div>
+        `;
+      }
+
+      wrap.innerHTML = `
+        <div class="ai-bubble-bot">
+          <div class="ai-bot-header">
+            <span class="ai-bot-avatar">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 3c0 4.5-3.5 8-8 8 4.5 0 8 3.5 8 8 0-4.5 3.5-8 8-8-4.5 0-8-3.5-8-8z"/>
+              </svg>
+            </span>
+            <span class="ai-bot-name">AI Assistant METHABALANCE</span>
+            <span class="ai-bot-time">${data.time || 'Live'}</span>
+          </div>
+          ${data.title ? `<div class="ai-bot-title">${data.title}</div>` : ''}
+          <div class="ai-bot-content">${data.contentHtml}</div>
+          ${actionHtml}
+        </div>
+      `;
+
+      // Attach action button listener
+      const actionBtn = wrap.querySelector('.ai-action-btn');
+      if (actionBtn) {
+        actionBtn.addEventListener('click', () => {
+          const targetTab = actionBtn.getAttribute('data-action-tab');
+          if (targetTab) switchTab(targetTab);
+        });
+      }
+    }
+
+    el.adminAiChatStream.appendChild(wrap);
+    el.adminAiChatStream.scrollTop = el.adminAiChatStream.scrollHeight;
+  }
+
+  function evaluateAdminAiQuery(query) {
+    const q = query.toLowerCase();
+
+    // 1. Neraca Massa / Mass Balance / Debit / Rugi / Aliran
+    if (q.includes('neraca') || q.includes('massa') || q.includes('balance') || q.includes('loss') || q.includes('rugi') || q.includes('debit') || q.includes('inflow') || q.includes('outflow')) {
+      return {
+        title: 'Analisis Neraca Massa Gas (Mass Balance)',
+        contentHtml: `
+          Status distribusi biogas saat ini berada dalam kondisi <strong>SEIMBANG & STABIL</strong>:
+          <ul>
+            <li><strong>Debit Pasokan Hulu (TPAS Manggar):</strong> 142,6 Nm³/h (Tekanan 4,5 kPa)</li>
+            <li><strong>Total Konsumsi Hilir (Warga & UMKM):</strong> 135,2 Nm³/h</li>
+            <li><strong>Delta Deviasi Rugi-Rugi:</strong> 7,4 Nm³/h (5,18%)</li>
+            <li><strong>Ambang Toleransi Pipa PVC:</strong> Maksimum 8,0% (Normal Operasional)</li>
+            <li><strong>Efisiensi Transmisi Jaringan:</strong> 94,8%</li>
+          </ul>
+          Rugi-rugi teknis berada dalam rentang wajar jaringan 8,3 km tanpa kebocoran pipa utama.
+        `,
+        actionLabel: 'Buka Tab Beranda',
+        actionTab: 'ringkasan'
+      };
+    }
+
+    // 2. Katup / Valve / GIS / Pipa / Node / Aktuator / Spasial
+    if (q.includes('katup') || q.includes('valve') || q.includes('node') || q.includes('tutup') || q.includes('gis') || q.includes('spasial') || q.includes('aktuator')) {
+      const closedNodes = state.nodesState.filter(n => n.status !== 'open').map(n => n.name).join(', ') || 'Semua Node Buka';
+      return {
+        title: 'Status Katup Motorik GIS (5 Node Distribusi)',
+        contentHtml: `
+          Status 5 Katup Motorik (Motorized Ball Valve SS304 NC) pada peta spasial GIS:
+          <ul>
+            <li><strong>3 Katup Normal BUKA:</strong> Node-01 (TPAS Hulu), Node-04 (RT 25), Node-05 (RT 22) dengan tekanan 2,5 – 6,0 kPa.</li>
+            <li><strong>Katup TUTUP / SIAGA:</strong> ${closedNodes} diisolasi untuk pemeliharaan jaringan terjadwal.</li>
+            <li><strong>Waktu Respon Solenoid:</strong> 3,8 detik respon darurat.</li>
+            <li><strong>Kontrol Cepat:</strong> Anda dapat membuka/menutup katup darurat langsung di tab Pipa & Katup.</li>
+          </ul>
+        `,
+        actionLabel: 'Buka Tab Pipa & Katup',
+        actionTab: 'pipa'
+      };
+    }
+
+    // 3. Siphon / Kondensat / Kuras / SOP / Air / Water Blocking
+    if (q.includes('siphon') || q.includes('kuras') || q.includes('kondensat') || q.includes('sop') || q.includes('blocking') || q.includes('air') || q.includes('sumbat')) {
+      return {
+        title: 'SOP Kuras Siphon Kondensat Gravitasi U-Bend',
+        contentHtml: `
+          Prosedur Standar Operasional (SOP) Pembersihan Air Kondensat Pipa:
+          <ul>
+            <li><strong>1. Akses Titik Kuras:</strong> Buka penutup box manifold U-bend pada Node-07 cekungan RT 23.</li>
+            <li><strong>2. Putar Drain Cock:</strong> Buka perlahan katup pembuangan air gravitasi (drain cock).</li>
+            <li><strong>3. Purging Air:</strong> Tampung butiran kondensat hingga uap biogas murni beraroma khas keluar.</li>
+            <li><strong>4. Penguncian & Verifikasi:</strong> Kunci kembali katup drain dan pantau kenaikan tekanan pipa hilir ke 4,2 kPa.</li>
+          </ul>
+          Catatan: Teknisi DLH Budi Santoso sedang menangani tiket INC-2026-088 di lokasi ini.
+        `,
+        actionLabel: 'Buka Tab Tiket',
+        actionTab: 'tiket'
+      };
+    }
+
+    // 4. Iuran / Retribusi / Warga / UMKM / Tarif / Pelanggan / LPG / Karbon
+    if (q.includes('iuran') || q.includes('tarif') || q.includes('biaya') || q.includes('umkm') || q.includes('warga') || q.includes('pelanggan') || q.includes('retribusi') || q.includes('lpg') || q.includes('karbon')) {
+      return {
+        title: 'Rekap Iuran Pelanggan & Substitusi LPG WASTECO',
+        contentHtml: `
+          Struktur tarif retribusi dan dampak ekonomi program biogas TPAS Manggar:
+          <ul>
+            <li><strong>Rumah Tangga (SR):</strong> Rp 10.000 / bulan (380 Sambungan Rumah aktif).</li>
+            <li><strong>UMKM Kuliner & Usaha Tahu:</strong> Rp 25.000 / bulan (29 UMKM aktif).</li>
+            <li><strong>Total Pelanggan Terdaftar:</strong> 409 pelanggan (Koperasi WASTECO).</li>
+            <li><strong>Penghematan Pengeluaran:</strong> Substitusi setara 1.140 tabung LPG 3kg (~Rp 23,9 juta per bulan).</li>
+            <li><strong>Reduksi Emisi GRK:</strong> Menurunkan 14,8 Ton CO₂e setiap bulan.</li>
+          </ul>
+        `,
+        actionLabel: 'Buka Tab Pelanggan',
+        actionTab: 'pelanggan'
+      };
+    }
+
+    // 5. Tiket / Gangguan / Komplain / Aduan / Teknisi
+    if (q.includes('tiket') || q.includes('gangguan') || q.includes('aduan') || q.includes('keluhan') || q.includes('insiden') || q.includes('teknisi')) {
+      const openCount = state.ticketsState.filter(t => t.status !== 'Resolved').length;
+      return {
+        title: 'Status Tiket Aduan & Penanganan Lapangan',
+        contentHtml: `
+          Terdapat <strong>${openCount} tiket aktif</strong> dalam pemantauan UPTD DLH:
+          <ul>
+            <li><strong>INC-2026-088:</strong> Hambatan air kondensat cekungan pipa Node-07 (RT 23) - Ditangani teknisi Budi Santoso.</li>
+            <li><strong>INC-2026-087:</strong> Pembersihan burner kompor biogas tersumbat - Ditangani teknisi Budi Santoso.</li>
+            <li><strong>INC-2026-086:</strong> Penggantian seal karet meter gas - Selesai.</li>
+          </ul>
+          Status tiket dapat diperbarui langsung ke status Resolved melalui panel Tiket.
+        `,
+        actionLabel: 'Buka Tab Tiket',
+        actionTab: 'tiket'
+      };
+    }
+
+    // 6. Kualitas Gas / Metana / CH4 / Api Biru
+    if (q.includes('ch4') || q.includes('metana') || q.includes('kualitas') || q.includes('api') || q.includes('biru')) {
+      return {
+        title: 'Kualitas Biogas & Kemurnian Metana',
+        contentHtml: `
+          Hasil uji sensor optical NDIR Dynament terkini:
+          <ul>
+            <li><strong>Kemurnian Metana (CH₄):</strong> <strong>56,4% Vol</strong> (Standar aman api biru > 50,0%).</li>
+            <li><strong>Suhu Transmisi Pipa:</strong> 29,2°C | Dew Point: 24,1°C.</li>
+            <li><strong>Status Pembakaran:</strong> Api biru bersih tanpa jelaga pada kompor warga binaan.</li>
+          </ul>
+        `,
+        actionLabel: 'Buka Tab Beranda',
+        actionTab: 'ringkasan'
+      };
+    }
+
+    // Fallback General
+    return {
+      title: 'Panduan Operasional SCADA TPAS Manggar',
+      contentHtml: `
+        Informasi operasional siap dianalisis:
+        <ul>
+          <li>Ketik <strong>"neraca massa"</strong> untuk debit inflow hulu & rugi transmisi.</li>
+          <li>Ketik <strong>"katup"</strong> untuk cek status 5 unit motorized ball valve GIS.</li>
+          <li>Ketik <strong>"sop siphon"</strong> untuk langkah kuras air kondensat pipa.</li>
+          <li>Ketik <strong>"iuran"</strong> untuk rincian iuran RT (Rp 10.000) dan UMKM (Rp 25.000).</li>
+          <li>Ketik <strong>"tiket"</strong> untuk daftar keluhan dan penanganan teknisi.</li>
+        </ul>
+      `,
+      actionLabel: 'Buka Tab Beranda',
+      actionTab: 'ringkasan'
+    };
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, function (m) {
+      return {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      }[m];
+    });
+  }
+
   // Init Application
   document.addEventListener('DOMContentLoaded', () => {
     initElements();
@@ -480,6 +935,33 @@
     setupCustomerControls();
     setupModals();
     renderRingkasan();
+    initAdminGisMap();
+    initAiAssistant();
+
+    const adminRefreshBtn = document.getElementById('btnAdminHeaderRefresh');
+    if (adminRefreshBtn) {
+      adminRefreshBtn.addEventListener('click', () => {
+        renderRingkasan();
+        showToast('Data telemetri SCADA berhasil disegarkan.');
+      });
+    }
+
+    const berandaAiCard = document.getElementById('berandaAiCard');
+    if (berandaAiCard) {
+      berandaAiCard.addEventListener('click', () => {
+        switchTab('ai');
+      });
+    }
+
+    function checkUrlHash() {
+      const hash = (window.location.hash || '').replace('#', '');
+      if (['ringkasan', 'pelanggan', 'pipa', 'tiket', 'ai'].includes(hash)) {
+        switchTab(hash);
+      }
+    }
+    window.addEventListener('hashchange', checkUrlHash);
+    checkUrlHash();
+
   });
 
 })();

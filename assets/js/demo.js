@@ -105,8 +105,8 @@ window.MB = window.MB || {};
       offtake: { ZU: offU, Z1: offZ[0], Z2: offZ[1], Z3: offZ[2], Z4: offZ[3] },
       gas_temp: [34 + 1.2 * smooth(t, 0, 7, 5400e3)].concat([0, 1, 2, 3].map(function (i) { return amb + 2.5 + 0.8 * smooth(t, i + 1, 7, 5400e3); })),
       ch4: [52 + 1.6 * smooth(t, 0, 8, 10800e3)],
-      o2: [0.55 + 0.15 * smooth(t, 0, 9, 7200e3)],
-      h2s: [46 + 7 * smooth(t, 0, 10, 10800e3)],
+      o2: [null],
+      h2s: [null],
       amb: amb,
       rh: clamp(88 - 2.6 * (amb - 27) + 3 * smooth(t, 0, 11, 3600e3), 55, 98),
       sun: sun * cloud
@@ -140,8 +140,8 @@ window.MB = window.MB || {};
         return b.flow[i];
       case 'gas_temp': return b.gas_temp[i];
       case 'ch4': return i === 0 ? b.ch4[0] : b.ch4[0] - 0.4 - 0.3 * i + 0.3 * smooth(t, i, 8, 7200e3);
-      case 'o2': return i === 0 ? b.o2[0] : b.o2[0] + 0.12 + 0.05 * i + 0.05 * smooth(t, i, 9, 3600e3);
-      case 'h2s': return i === 0 ? b.h2s[0] : b.h2s[0] - 4 - i + 2 * smooth(t, i, 10, 3600e3);
+      case 'o2': return null;
+      case 'h2s': return null;
       case 'amb_temp': return b.amb + 0.3 * i;
       case 'humidity': return b.rh;
       case 'battery_v': {

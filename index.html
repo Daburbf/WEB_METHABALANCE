@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>METHABALANCE &bull; Monitoring Jaringan Biogas TPAS Manggar</title>
+  <title>METHABALANCE - Monitoring Jaringan Biogas TPAS Manggar</title>
   <meta name="description" content="Platform monitoring telemetri IoT dan neraca massa gas hulu-hilir TPAS Manggar Balikpapan.">
   <meta name="theme-color" content="#0F3B2F">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -70,6 +70,10 @@
           <svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg>
           <span>Device Health</span>
         </a>
+        <a href="#ai-copilot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="12" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+          <span>AI Assistant</span>
+        </a>
 
         <div class="nav-group">Sistem &amp; Laporan</div>
         <a href="#reports">
@@ -112,40 +116,11 @@
           </nav>
         </div>
 
-        <!-- Right: Search (Kaca Pembesar Saja), Weather, Notification Bell, Clock, Refresh & Mode -->
+        <!-- Right: 1 Single Clean Role Badge as Requested -->
         <div class="topbar-right">
-          <!-- Tombol Cari: Kaca Pembesar Saja -->
-          <button class="topbar-icon-btn" id="topbarSearchBtn" type="button" title="Pencarian Cepat" aria-label="Cari">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
-
-          <!-- Weather Widget (Lovable style: Balikpapan 28°C | RH 82%) -->
-          <div class="topbar-weather">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-            <span>Balikpapan 28°C | RH 82%</span>
-          </div>
-
-          <!-- Notification Bell with Red Badge '1' -->
-          <button class="topbar-icon-btn" id="topbarNotificationBtn" type="button" title="1 Insiden Aktif Memerlukan Tindakan" aria-label="1 Notifikasi" onclick="window.location.hash='#incidents'">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-            </svg>
-            <span class="notification-badge">1</span>
-          </button>
-
-          <!-- Refresh Button -->
-          <button class="topbar-icon-btn" id="topbarRefreshBtn" title="Sinkronisasi Data Telemetri" type="button" aria-label="Sinkronisasi">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-          </button>
-
-          <!-- Time / Live Clock Block -->
-          <div class="topbar-clock-block">
-            <p class="clock-time" id="liveClockDisplay">--:--:--</p>
-            <p class="clock-zone">WITA</p>
+          <div class="topbar-role-badge" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(16,185,129,0.1);color:#059669;border:1px solid rgba(16,185,129,0.25);border-radius:var(--radius-sm);font-size:12.5px;font-weight:700;letter-spacing:0.02em;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Role: Admin</span>
           </div>
         </div>
       </header>
@@ -159,7 +134,7 @@
       <footer class="footer">
         <div class="row" style="justify-content:space-between;align-items:center;">
           <span>&copy; 2026 METHABALANCE</span>
-          <span class="muted">Sistem Monitoring Jaringan Biogas &bull; Balikpapan Timur</span>
+          <span class="muted">Sistem Monitoring Jaringan Biogas — Balikpapan Timur</span>
         </div>
       </footer>
     </div>
@@ -179,9 +154,9 @@
     <div class="dlg-body" id="quickSearchResults" style="max-height:280px;overflow-y:auto;padding:14px 18px;">
       <div style="font-size:12px;color:var(--text-muted);line-height:1.6;">
         Pencarian cepat sistem:<br>
-        &bull; <strong>MB-HD-01</strong> s/d <strong>MB-HD-04</strong> atau <strong>MB-HU-01</strong> (Aset Node)<br>
-        &bull; <strong>CH4</strong>, <strong>O2</strong>, <strong>H2S</strong>, <strong>Suhu</strong> (Kualitas Gas)<br>
-        &bull; <strong>Kritis</strong>, <strong>Insiden</strong>, <strong>Water-Blocking</strong> (Log Anomali)
+        - <strong>MB-HD-01</strong> s/d <strong>MB-HD-04</strong> atau <strong>MB-HU-01</strong> (Aset Node)<br>
+        - <strong>CH4</strong>, <strong>Suhu</strong>, <strong>Tekanan</strong> (Kualitas Gas)<br>
+        - <strong>Kritis</strong>, <strong>Insiden</strong>, <strong>Water-Blocking</strong> (Log Anomali)
       </div>
     </div>
     <div class="dlg-foot" style="justify-content:flex-end;">
@@ -274,6 +249,7 @@
   <script src="assets/js/engine.js"></script>
   <script src="assets/js/incidents.js"></script>
   <script src="assets/js/views.js"></script>
+  <script src="assets/js/copilot.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>

@@ -12,15 +12,13 @@ window.MB = window.MB || {};
     flow:      { label: 'Laju aliran', short: 'Aliran', unit: 'Nm³/h', dec: 1, group: 'proses' },
     gas_temp:  { label: 'Suhu gas', short: 'Suhu gas', unit: '°C', dec: 1, group: 'proses' },
     ch4:       { label: 'Konsentrasi CH₄', short: 'CH₄', unit: '%vol', dec: 1, group: 'kualitas' },
-    o2:        { label: 'Konsentrasi O₂', short: 'O₂', unit: '%vol', dec: 2, group: 'kualitas' },
-    h2s:       { label: 'Konsentrasi H₂S', short: 'H₂S', unit: 'ppm', dec: 0, group: 'kualitas' },
     amb_temp:  { label: 'Suhu lingkungan', short: 'Suhu ling.', unit: '°C', dec: 1, group: 'lingkungan' },
     humidity:  { label: 'Kelembapan relatif lingkungan', short: '%RH', unit: '%RH', dec: 0, group: 'lingkungan' },
     battery_v: { label: 'Tegangan baterai', short: 'Baterai', unit: 'V', dec: 2, group: 'daya' },
     soc:       { label: 'State of charge baterai', short: 'SoC', unit: '%', dec: 0, group: 'daya' },
     solar_w:   { label: 'Daya panel surya', short: 'Panel', unit: 'W', dec: 1, group: 'daya' }
   };
-  var PARAM_ORDER = ['pressure', 'flow', 'gas_temp', 'ch4', 'o2', 'h2s', 'amb_temp', 'humidity', 'battery_v', 'soc', 'solar_w'];
+  var PARAM_ORDER = ['pressure', 'flow', 'gas_temp', 'ch4', 'amb_temp', 'humidity', 'battery_v', 'soc', 'solar_w'];
 
   var SENSOR_STATUS = {
     installed:       { label: 'Terpasang', cls: 'st-ok' },
@@ -62,7 +60,7 @@ window.MB = window.MB || {};
   }
 
   var DEFAULTS = {
-    version: 3,
+    version: 4,
     configNote: 'Konfigurasi teknis stasiun ekstraksi dan 4 batas zona distribusi TPAS Manggar.',
     telemetry: { intervalMin: 5, staleMin: 15, offlineMin: 30, syncTolSec: 120 },
     flow: { unit: 'Nm³/h', basis: 'Normal (0 °C; 101,325 kPa)', basisVerified: true },
@@ -75,8 +73,8 @@ window.MB = window.MB || {};
           flow: sensor('installed', { model: 'FCI ST50 Thermal Mass', serial: 'SN-2026-FM01', rangeMin: 0, rangeMax: 150, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15', note: 'Thermal mass flow meter, basis Nm³/h' }),
           gas_temp: sensor('installed', { model: 'Pt100 RTD SS316', serial: 'SN-2026-RTD01', rangeMin: -20, rangeMax: 100, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           ch4: sensor('installed', { model: 'Dynament MSH-P-NDIR', serial: 'SN-2026-CH01', rangeMin: 0, rangeMax: 100, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15', note: 'NDIR infrared optical sensor' }),
-          o2: sensor('installed', { model: 'Alphasense O2-A2', serial: 'SN-2026-O201', rangeMin: 0, rangeMax: 25, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15', note: 'Sensor elektrokimia O2' }),
-          h2s: sensor('installed', { model: 'Alphasense H2S-B4', serial: 'SN-2026-HS01', rangeMin: 0, rangeMax: 100, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15', note: 'Sensor elektrokimia H2S' }),
+          o2: sensor('not_installed'),
+          h2s: sensor('not_installed'),
           amb_temp: sensor('installed', { model: 'SHT31-DIS', serial: 'SN-2026-TH01', calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           humidity: sensor('installed', { model: 'SHT31-DIS', serial: 'SN-2026-TH01', calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           battery_v: sensor('installed', { model: 'ADC Internal Atten', serial: 'MB-HU-PWR', calib: 'valid' }),
@@ -93,7 +91,7 @@ window.MB = window.MB || {};
           flow: sensor('installed', { model: 'FCI ST50 Thermal Mass', serial: 'SN-2026-FM02', rangeMin: 0, rangeMax: 150, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           gas_temp: sensor('installed', { model: 'Pt100 RTD SS316', serial: 'SN-2026-RTD02', rangeMin: -20, rangeMax: 100, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           ch4: sensor('not_installed'),
-          o2: sensor('installed', { model: 'Alphasense O2-A2', serial: 'SN-2026-O202', rangeMin: 0, rangeMax: 25, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
+          o2: sensor('not_installed'),
           h2s: sensor('not_installed'),
           amb_temp: sensor('not_installed'),
           humidity: sensor('not_installed'),
@@ -112,7 +110,7 @@ window.MB = window.MB || {};
           gas_temp: sensor('installed', { model: 'Pt100 RTD SS316', serial: 'SN-2026-RTD03', rangeMin: -20, rangeMax: 100, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           ch4: sensor('not_installed'),
           o2: sensor('not_installed'),
-          h2s: sensor('installed', { model: 'Alphasense H2S-B4', serial: 'SN-2026-HS02', rangeMin: 0, rangeMax: 100, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
+          h2s: sensor('not_installed'),
           amb_temp: sensor('not_installed'),
           humidity: sensor('not_installed'),
           battery_v: sensor('installed', { model: 'INA219 I2C Sensor', serial: 'SN-2026-PW03', calib: 'valid' }),
@@ -129,7 +127,7 @@ window.MB = window.MB || {};
           flow: sensor('installed', { model: 'FCI ST50 Thermal Mass', serial: 'SN-2026-FM04', rangeMin: 0, rangeMax: 150, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           gas_temp: sensor('installed', { model: 'Pt100 RTD SS316', serial: 'SN-2026-RTD04', rangeMin: -20, rangeMax: 100, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           ch4: sensor('not_installed'),
-          o2: sensor('installed', { model: 'Alphasense O2-A2', serial: 'SN-2026-O203', rangeMin: 0, rangeMax: 25, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
+          o2: sensor('not_installed'),
           h2s: sensor('not_installed'),
           amb_temp: sensor('not_installed'),
           humidity: sensor('not_installed'),
@@ -147,7 +145,7 @@ window.MB = window.MB || {};
           flow: sensor('installed', { model: 'FCI ST50 Thermal Mass', serial: 'SN-2026-FM05', rangeMin: 0, rangeMax: 150, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           gas_temp: sensor('installed', { model: 'Pt100 RTD SS316', serial: 'SN-2026-RTD05', rangeMin: -20, rangeMax: 100, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
           ch4: sensor('not_installed'),
-          o2: sensor('installed', { model: 'Alphasense O2-A2', serial: 'SN-2026-O204', rangeMin: 0, rangeMax: 25, calib: 'valid', lastCal: '2026-01-15', nextCal: '2027-01-15' }),
+          o2: sensor('not_installed'),
           h2s: sensor('not_installed'),
           amb_temp: sensor('not_installed'),
           humidity: sensor('not_installed'),
@@ -192,8 +190,6 @@ window.MB = window.MB || {};
       flow_change:    { enabled: true, warn: 45, crit: 70, unit: '% vs median 30 menit', label: 'Perubahan aliran tidak wajar', dir: 'above' },
       balance_loss:   { enabled: true, warn: 5, crit: 10, unit: '% losses', label: 'Ketidaksesuaian neraca', dir: 'above' },
       ch4_low:        { enabled: true, warn: 45, crit: 40, unit: '%vol', label: 'CH₄ rendah', dir: 'below' },
-      o2_high:        { enabled: true, warn: 2, crit: 4, unit: '%vol', label: 'O₂ meningkat', dir: 'above' },
-      h2s_high:       { enabled: true, warn: 50, crit: 80, unit: 'ppm', label: 'H₂S meningkat', dir: 'above' },
       battery_low:    { enabled: true, warn: 12.0, crit: 11.6, unit: 'V', label: 'Tegangan baterai rendah', dir: 'below' },
       water_block:    { enabled: true, warn: 4, crit: null, unit: '% CV tekanan 60 menit + aliran turun >15%', label: 'Indikasi water-blocking', dir: 'above' }
     },
@@ -228,8 +224,6 @@ window.MB = window.MB || {};
     { item: 'ESP32-S3 IoT Node Controller', qty: '5 Unit', spec: 'Dual-core Xtensa LX7, 8MB Flash, 2MB PSRAM, LoRa SPI' },
     { item: 'Pressure Transmitter SS316L', qty: '5 Unit', spec: 'Sensata 114PC, Rentang 0–100 kPa, Akurasi ±0.5% FS, 4-20mA' },
     { item: 'Thermal Mass Flow Meter', qty: '5 Unit', spec: 'FCI ST50 Series, Rentang 0–150 Nm³/h, Suhu -10–100°C' },
-    { item: 'Sensor H₂S Elektrokimia', qty: '2 Unit', spec: 'Alphasense H2S-B4, Resolusi 0.5 ppm, Rentang 0–100 ppm' },
-    { item: 'Sensor O₂ Elektrokimia', qty: '4 Unit', spec: 'Alphasense O2-A2, Rentang 0–25% Vol, Akurasi ±0.1%' },
     { item: 'Sensor CH₄ Optical NDIR', qty: '1 Unit', spec: 'Dynament MSH-P-NDIR, Rentang 0–100% Vol, Dual Wavelength' },
     { item: 'Sensor Suhu Gas Pt100 RTD', qty: '5 Unit', spec: 'Pt100 Kelas A, Probe SS316 100mm, Rentang -20–100°C' },
     { item: 'Gateway LoRaWAN Outdoor AS923', qty: '1 Unit', spec: 'IP67 Outdoor, 8-Channel Semtech SX1302, AS923-2' }

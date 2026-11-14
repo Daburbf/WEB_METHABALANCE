@@ -188,7 +188,7 @@ window.MB = window.MB || {};
     c.nodes.forEach(function (n) {
       if (n.maintenance) return;
       var arr = {};
-      ['pressure', 'flow', 'ch4', 'o2', 'h2s', 'battery_v'].forEach(function (p) {
+      ['pressure', 'flow', 'ch4', 'battery_v'].forEach(function (p) {
         arr[p] = steps.map(function (t) { return MB.ds.valueAtStep(n.id, p, t); });
       });
       var lastRx = null;
@@ -220,8 +220,6 @@ window.MB = window.MB || {};
         track('fch:' + n.id, mk('flow_change', th('flow_change').label, 'Aliran', '%', th('flow_change'), 'above', 'Laju aliran berubah jauh dari median 30 menit sebelumnya.'), t, sev(chg, th('flow_change'), 'above'), chg);
 
         track('ch4:' + n.id, mk('ch4_low', th('ch4_low').label, 'CH₄', '%vol', th('ch4_low'), 'below', 'Konsentrasi CH₄ di bawah ambang uji.'), t, sev(arr.ch4[i], th('ch4_low'), 'below'), arr.ch4[i]);
-        track('o2:' + n.id, mk('o2_high', th('o2_high').label, 'O₂', '%vol', th('o2_high'), 'above', 'O₂ naik: kemungkinan udara masuk. Analisis bersama tekanan dan CH₄.'), t, sev(arr.o2[i], th('o2_high'), 'above'), arr.o2[i]);
-        track('h2s:' + n.id, mk('h2s_high', th('h2s_high').label, 'H₂S', 'ppm', th('h2s_high'), 'above', 'H₂S melewati ambang. Ikuti prosedur K3 lokasi.'), t, sev(arr.h2s[i], th('h2s_high'), 'above'), arr.h2s[i]);
         track('bat:' + n.id, mk('battery_low', th('battery_low').label, 'Daya', 'V', th('battery_low'), 'below', 'Tegangan baterai di bawah ambang uji.'), t, sev(arr.battery_v[i], th('battery_low'), 'below'), arr.battery_v[i]);
 
         if (n.type === 'downstream' && i >= 24) {

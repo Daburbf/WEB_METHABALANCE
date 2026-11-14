@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0d1f17">
   <meta name="description" content="Portal Warga & UMKM Penerima Manfaat Biogas WASTECO — UPTD TPAS Manggar × DLH Kota Balikpapan">
-  <title>METHABALANCE Mobile • Portal Warga & UMKM Biogas TPAS Manggar</title>
+  <title>METHABALANCE Mobile | Portal Warga & UMKM Biogas TPAS Manggar</title>
 
   <!-- Google Fonts: Inter & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet GIS Mapping Engine (Offline Local Vendor) -->
+  <link rel="stylesheet" href="../assets/vendor/leaflet.css">
+  <script src="../assets/vendor/leaflet.js"></script>
 
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -21,75 +25,57 @@
 
     <!-- PERSISTENT APP HEADER WITH KALIMANTAN TIMUR BATIK SULUR ORNAMENT -->
     <header class="app-header">
-      <!-- Inline SVG Batik Sulur & Circuit Geometric Pattern in Pure Emerald & Mint Tones -->
-      <svg class="header-batik-bg" viewBox="0 0 400 90" fill="none" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 45 C 50 15, 80 75, 130 45 C 180 15, 210 75, 260 45 C 310 15, 340 75, 400 45" stroke="#10b981" stroke-width="2" stroke-opacity="0.35" fill="none"/>
-        <path d="M0 55 C 50 25, 80 85, 130 55 C 180 25, 210 85, 260 55 C 310 25, 340 85, 400 55" stroke="#34d399" stroke-width="1.2" stroke-opacity="0.25" stroke-dasharray="3 4" fill="none"/>
-        <circle cx="65" cy="45" r="3.5" fill="#10b981" fill-opacity="0.5"/>
-        <circle cx="195" cy="45" r="3.5" fill="#34d399" fill-opacity="0.5"/>
-        <circle cx="325" cy="45" r="3.5" fill="#10b981" fill-opacity="0.5"/>
-        <polygon points="130,25 135,35 125,35" fill="#34d399" fill-opacity="0.4"/>
-        <polygon points="260,65 265,55 255,55" fill="#10b981" fill-opacity="0.4"/>
-        <polygon points="390,25 395,35 385,35" fill="#34d399" fill-opacity="0.4"/>
-      </svg>
 
       <div class="header-inner">
         <!-- Top Row: Brand & Status Trigger -->
         <div class="header-top-row">
           <div class="header-brand">
-            <div class="brand-seal-box">
-              <svg viewBox="0 0 48 48" fill="none">
-                <defs>
-                  <linearGradient id="mbGradMob" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stop-color="#10b981"/>
-                    <stop offset="100%" stop-color="#059669"/>
-                  </linearGradient>
-                  <linearGradient id="mbAccentMob" x1="12" y1="12" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stop-color="#34d399"/>
-                    <stop offset="100%" stop-color="#047857"/>
-                  </linearGradient>
-                </defs>
-                <rect width="48" height="48" rx="12" fill="#0F3B2F"/>
-                <path d="M14 24C14 18.477 18.477 14 24 14C29.523 14 34 18.477 34 24C34 29.523 29.523 34 24 34" stroke="url(#mbGradMob)" stroke-width="3.2" stroke-linecap="round"/>
-                <circle cx="24" cy="24" r="4.5" fill="url(#mbAccentMob)"/>
-                <path d="M10 24H14" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
-                <path d="M34 24H38" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
-                <path d="M24 10V14" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-                <path d="M24 34V38" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="24" cy="10" r="2" fill="#34d399"/>
-                <circle cx="38" cy="24" r="2" fill="#34d399"/>
-              </svg>
+            <div class="brand-seal-box" style="padding:0;overflow:hidden;background:transparent;border:none;box-shadow:none;">
+              <img src="../assets/img/logo.svg" alt="METHABALANCE" width="36" height="36" style="display:block;border-radius:10px;">
             </div>
             <div class="brand-titles">
-              <div class="brand-title">
-                METHABALANCE
-                <span class="badge-mobile">Mobile</span>
-              </div>
-              <span class="brand-subtitle">DLH Kota Balikpapan &bull; TPAS Manggar</span>
+              <div class="brand-title">METHABALANCE</div>
+              <span class="brand-subtitle">TPAS Manggar Gas Grid</span>
             </div>
           </div>
 
           <div class="header-controls">
-            <!-- Grid State Switcher Button (Normal vs Isolasi) -->
-            <button class="header-btn" id="btnToggleGridModal" type="button" title="Status Jaringan Pipa">
-              <span class="pulse-dot" id="headerGridPulse" style="color:#22c55e;"></span>
-              <span id="headerGridLabel">Normal</span>
+            <div class="topbar-role-badge">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span>Role: Warga</span>
+            </div>
+            <button class="header-refresh-btn" id="btnWargaHeaderRefresh" type="button" title="Segarkan Data Warga">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 4v6h-6"/>
+                <path d="M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+              </svg>
             </button>
           </div>
         </div>
 
-        <!-- Account Bar: Active Profile Switcher -->
-        <div class="header-account-bar">
-          <div class="account-info-left">
-            <span class="account-role-tag" id="hdrAccountRole">Warga RT 23</span>
-            <span class="account-customer-id" id="hdrAccountId">SR-0142</span>
+        <!-- Weather Telemetry Bar: Stasiun Cuaca TPAS Manggar -->
+        <div class="header-weather-bar" id="headerWeatherBar" role="region" aria-label="Informasi Cuaca TPAS Manggar">
+          <div class="weather-left">
+            <span class="weather-icon-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+              </svg>
+            </span>
+            <div class="weather-info">
+              <div class="weather-primary-txt">
+                <strong class="weather-temp" id="hdrWeatherTemp">29,4°C</strong>
+                <span class="weather-cond" id="hdrWeatherCond">Cerah Berawan</span>
+                <span class="weather-loc">Manggar</span>
+              </div>
+              <div class="weather-secondary-txt">
+                <span>Lembap: <strong id="hdrWeatherHum">81% RH</strong></span>
+                <span class="weather-bullet">|</span>
+                <span>Dew Point: <strong>24,1°C</strong></span>
+              </div>
+            </div>
           </div>
-          <button class="account-switch-trigger" id="btnOpenAccountModal" type="button">
-            <span>Ganti Akun</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
         </div>
       </div>
     </header>
@@ -170,7 +156,7 @@
               Tagihan &amp; Iuran Pemeliharaan
             </span>
             <span class="status-text-plain text-ok" id="billingBadge">
-              <span id="billingStatusText">Lunas &bull; Nov 2026</span>
+              <span id="billingStatusText">Lunas | Nov 2026</span>
             </span>
           </div>
 
@@ -222,35 +208,73 @@
           </div>
         </div>
 
-        <!-- 5. Quick Safety Controls -->
-        <div class="card">
-          <div class="card-header">
+        <!-- 5. PETA GIS & KATUP PIPA (LANGSUNG MUNCUL DI BERANDA) -->
+        <div class="card" id="berandaGisSection" style="padding: 12px 14px; margin-bottom: 12px;">
+          <div class="card-header" style="margin-bottom: 8px;">
             <span class="card-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+                <line x1="8" y1="2" x2="8" y2="18"/>
+                <line x1="16" y1="6" x2="16" y2="22"/>
               </svg>
-              Kontrol Keamanan Kompor
+              Peta GIS &amp; Katup Pipa (Topologi 8,3 km)
             </span>
           </div>
 
-          <div class="quick-controls-grid">
-            <button class="control-btn control-btn-danger" id="btnEmergencyShutoff" type="button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
-              </svg>
-              <span id="valveActionText">Tutup Katup Mandiri<br><small style="font-size:0.7rem;font-weight:400;opacity:0.8;">Emergency Shut-Off</small></span>
-            </button>
+          <!-- Alert Banner: Katup Tertutup / Isolasi Darurat -->
+          <div class="gis-alert-card" id="gisClosedAlertCard" style="display:none; margin-bottom: 8px;">
+            <div class="gis-alert-top">
+              <span class="pulse-dot" style="background:#dc2626;"></span>
+              <strong id="gisAlertTitle">PERHATIAN: 2 Katup Sedang TERTUTUP</strong>
+            </div>
+            <div class="gis-alert-desc" id="gisAlertDesc">
+              Katup motorik diisolasi darurat. Aliran gas dihentikan sementara demi keselamatan warga.
+            </div>
+          </div>
 
-            <button class="control-btn control-btn-normal" id="btnQuickReport" type="button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                <line x1="12" y1="9" x2="12" y2="13"/>
-                <line x1="12" y1="17" x2="12.01" y2="17"/>
-              </svg>
-              <span>Lapor Bau Gas<br><small style="font-size:0.7rem;font-weight:400;opacity:0.8;">Tiket DLH Balikpapan</small></span>
-            </button>
+          <!-- Filter Controls -->
+          <div class="gis-controls-bar" style="margin-bottom: 8px;">
+            <div class="gis-filter-chips">
+              <button class="gis-chip active" id="btnFilterAllNodes" type="button">Semua (5)</button>
+              <button class="gis-chip" id="btnFilterOpenNodes" type="button"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#059669;margin-right:4px;"></span>Buka (<span id="countOpenValves">3</span>)</button>
+              <button class="gis-chip danger" id="btnFilterClosedNodes" type="button"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#dc2626;margin-right:4px;"></span>Tutup (<span id="countClosedValves">2</span>)</button>
+            </div>
+          </div>
+
+          <!-- Leaflet Map Frame (Langsung Muncul Begitu Aplikasi Dibuka) -->
+          <div class="gis-map-frame" style="height: 350px; border-radius: var(--radius-sm); overflow: hidden; position: relative;">
+            <div id="gisMapLeaflet" class="gis-map-inner" style="width:100%; height:100%;" role="region" aria-label="Peta Geografis Jaringan Biogas"></div>
+            
+            <!-- Map Legend Float Overlay -->
+            <div class="gis-map-legend">
+              <div class="legend-row">
+                <span class="legend-circle open"></span>
+                <span>Katup Buka (Mengalir)</span>
+              </div>
+              <div class="legend-row">
+                <span class="legend-circle closed"></span>
+                <span>Katup Tutup (Isolasi)</span>
+              </div>
+              <div class="legend-row">
+                <span class="legend-line" style="background:#059669;"></span>
+                <span>Pipa Biogas DLH (8,3 km)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Tip for Residents -->
+          <div class="gis-guide-tip" style="margin-top: 8px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" style="color:var(--color-emerald-deep);">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <span>Peta terarah: klik penanda katup (1–5) untuk cek tekanan (kPa) dan status isolasi.</span>
+          </div>
+
+          <!-- DAFTAR TABULAR 5 KATUP NODE -->
+          <div class="nodes-list-grid" id="nodesCardsList" style="margin-top: 12px;">
+            <!-- Dynamic Node Cards generated by JS -->
           </div>
         </div>
 
@@ -265,7 +289,7 @@
         <div class="telemetry-node-header">
           <div>
             <div class="node-meta-title" id="telemetryNodeTitle">Titik Pantau: Node-06 Cabang B</div>
-            <div class="node-meta-sub" id="telemetryNodeSub">Pipa PVC 3 Inci Class AW &bull; RT 23 Manggar</div>
+            <div class="node-meta-sub" id="telemetryNodeSub">Pipa PVC 3 Inci Class AW | RT 23 Manggar</div>
           </div>
           <span class="badge badge-success">
             <span class="pulse-dot" style="color:currentColor;"></span>
@@ -273,7 +297,7 @@
           </span>
         </div>
 
-        <!-- 4 Telemetry Metrics Grid (2x2) -->
+        <!-- Telemetry Metrics Grid (Tekanan & Metana) -->
         <div class="telemetry-grid">
           <!-- Metric 1: Tekanan Pipa -->
           <div class="telemetry-card">
@@ -289,7 +313,7 @@
             </div>
             <div class="telemetry-footer-status">
               Nominal: <strong>2,5 – 6,0 kPa</strong><br>
-              <span id="telemPressureBar">0,042 Bar &bull; Normal</span>
+              <span id="telemPressureBar">0,042 Bar | Normal</span>
             </div>
           </div>
 
@@ -310,46 +334,6 @@
               Kualitas: <span style="color:var(--primary);font-weight:600;">Api Biru Optimal</span>
             </div>
           </div>
-
-          <!-- Metric 3: Keamanan Udara O2 -->
-          <div class="telemetry-card">
-            <div class="telemetry-label-row">
-              <span>Kandungan Oksigen (O₂)</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-            </div>
-            <div class="telemetry-val-row">
-              <span class="telemetry-big-num tabular-nums">0,3</span>
-              <span class="telemetry-unit">% Vol</span>
-            </div>
-            <div class="telemetry-footer-status">
-              Sensor: <strong>Elektrokimia</strong><br>
-              Status: <span style="color:var(--success);font-weight:600;">Aman (LEL &gt; 5%)</span>
-            </div>
-          </div>
-
-          <!-- Metric 4: Kadar H2S -->
-          <div class="telemetry-card">
-            <div class="telemetry-label-row">
-              <span>Gas Asam (H₂S)</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                <polyline points="2 17 12 22 22 17"/>
-                <polyline points="2 12 12 17 22 12"/>
-              </svg>
-            </div>
-            <div class="telemetry-val-row">
-              <span class="telemetry-big-num tabular-nums">16</span>
-              <span class="telemetry-unit">ppm</span>
-            </div>
-            <div class="telemetry-footer-status">
-              Batas K3: <strong>&lt; 50 ppm</strong><br>
-              Status: <span style="color:var(--success);font-weight:600;">Aman untuk Logam</span>
-            </div>
-          </div>
         </div>
 
         <!-- Metric 5: Kelembapan & Water-Blocking Card -->
@@ -361,7 +345,6 @@
               </svg>
               Kelembapan Gas &amp; Cekungan Water-Trap
             </span>
-            <span class="badge badge-success">Bebas Hambatan</span>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <div>
@@ -401,7 +384,7 @@
             </div>
             <div class="legend-item">
               <span class="legend-dot" style="background-color:#fed7aa;"></span>
-              <span>Jam Masak (06:00 &bull; 17:30)</span>
+              <span>Jam Masak (06:00 | 17:30)</span>
             </div>
           </div>
         </div>
@@ -409,7 +392,173 @@
       </section>
 
       <!-- ===================================================================
-           TAB 3: LAPOR & EMERGENCY HOTLINE
+           TAB 3: LAYANAN BANTUAN & HELP DESK (CHAT SIAGA & POSKO LAPANGAN)
+           =================================================================== -->
+      <section class="tab-pane" id="tab-helpdesk" role="tabpanel" aria-labelledby="nav-tab-helpdesk">
+
+        <!-- Tab Header & Segmented Controller -->
+        <div class="helpdesk-header-card">
+          <div class="helpdesk-brand-row">
+            <div>
+              <h2 class="helpdesk-title">Layanan Bantuan Warga</h2>
+              <p class="helpdesk-subtitle">UPTD TPAS Manggar | DLH Balikpapan</p>
+            </div>
+          </div>
+
+          <!-- Segment Switcher: Chatbot vs Buku Panduan SOP -->
+          <div class="helpdesk-segments" role="tablist">
+            <button class="segment-btn active" id="btnSegChat" type="button" role="tab" aria-selected="true" data-subview="helpdeskChatView">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              <span>Chatbot Bantuan</span>
+            </button>
+            <button class="segment-btn" id="btnSegInfo" type="button" role="tab" aria-selected="false" data-subview="helpdeskInfoView">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+              <span>Buku Panduan SOP</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SUB-VIEW 1: CHATBOT BANTUAN WARGA -->
+        <div class="helpdesk-subview active" id="helpdeskChatView">
+          <!-- Chat Messages Scroll Container -->
+          <div class="chat-stream" id="chatStream" role="log" aria-live="polite">
+            <!-- Initial Operational Greeting Message -->
+            <div class="chat-bubble-row bot">
+              <div class="chat-bubble bot">
+                <div class="chat-sender-meta">
+                  <strong class="chat-sender-name">Asisten Biogas</strong>
+                  <span class="chat-time" id="chatInitTime">13:30 WITA</span>
+                </div>
+                <div class="chat-bubble-body" id="chatWelcomeBody">
+                  Selamat siang Ibu Siti Aminah (SR-0142, RT 23). Data sensor Node-06 menunjukkan tekanan pipa di sektor rumah Anda stabil pada 4,2 kPa. Ada kendala teknis pasokan gas atau butuh panduan kompor hari ini?
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WhatsApp-Style Bottom Dock: Quick Chips + Input Pill + Circular Send -->
+          <div class="chat-bottom-dock">
+            <!-- Quick Action Suggestion Chips (Custom Handcrafted SVG Icons, No Emojis) -->
+            <div class="chat-chips-scroll">
+              <span class="chips-label">Pertanyaan Cepat:</span>
+              <div class="chips-wrapper" id="chatChipsWrapper">
+                <!-- 1. Cek Tekanan Pipa (Manometer / Gauge SVG) -->
+                <button class="chip-btn" type="button" data-query="Cek tekanan gas rumah saya">
+                  <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 12l3.5-3.5"/>
+                    <line x1="12" y1="7" x2="12" y2="5"/>
+                    <line x1="7" y1="12" x2="5" y2="12"/>
+                    <line x1="17" y1="12" x2="19" y2="12"/>
+                  </svg>
+                  <span>Cek Tekanan Pipa</span>
+                </button>
+
+                <!-- 2. Ada Bau Gas (Warning Alert Triangle SVG) -->
+                <button class="chip-btn danger" type="button" data-query="Ada bau gas menyengat di dapur">
+                  <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                  <span>Ada Bau Gas</span>
+                </button>
+
+                <!-- 3. Api Kompor Merah (Stove Flame SVG) -->
+                <button class="chip-btn" type="button" data-query="Api kompor saya berwarna merah">
+                  <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                    <path d="M12 2c-4 4.5-7 8.5-7 12a7 7 0 0 0 14 0c0-3.5-3-7.5-7-12z"/>
+                    <path d="M12 14c-1.2 1.2-1.8 2.4-1.8 3.5a1.8 1.8 0 0 0 3.6 0c0-1.1-.6-2.3-1.8-3.5z"/>
+                  </svg>
+                  <span>Api Kompor Merah</span>
+                </button>
+
+                <!-- 4. Aliran Lemah / Hujan (Condensate Cloud & Rain Flow SVG) -->
+                <button class="chip-btn" type="button" data-query="Gas mengecil saat hujan lebat">
+                  <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                    <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/>
+                    <line x1="8" y1="14" x2="8" y2="19"/>
+                    <line x1="12" y1="16" x2="12" y2="21"/>
+                    <line x1="16" y1="14" x2="16" y2="19"/>
+                  </svg>
+                  <span>Aliran Lemah / Hujan</span>
+                </button>
+
+                <!-- 5. Info Iuran Rp 10.000 (Rupiah Cash Note / Card SVG) -->
+                <button class="chip-btn" type="button" data-query="Berapa iuran bulanan dan cara bayar">
+                  <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                    <rect x="2" y="6" width="20" height="12" rx="2"/>
+                    <circle cx="12" cy="12" r="2.5"/>
+                    <path d="M6 12h.01M18 12h.01"/>
+                  </svg>
+                  <span>Info Iuran Rp 10.000</span>
+                </button>
+
+                <!-- 6. Panggil Teknisi (Service Wrench SVG) -->
+                <button class="chip-btn" type="button" data-query="Panggil teknisi lapangan ke rumah">
+                  <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                  </svg>
+                  <span>Panggil Teknisi</span>
+                </button>
+
+                <!-- 7. Uji Busa Sabun (Soap Foam Bubbles SVG) -->
+                <button class="chip-btn" type="button" data-query="Cara uji kebocoran pakai air sabun">
+                  <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                    <circle cx="12" cy="13" r="5"/>
+                    <circle cx="18" cy="8" r="3"/>
+                    <circle cx="6" cy="9" r="2.5"/>
+                  </svg>
+                  <span>Uji Busa Sabun</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- WhatsApp-Style Message Input Row -->
+            <form class="chat-input-bar" id="chatInputForm">
+              <div class="chat-input-pill">
+                <input class="chat-input" id="chatInputField" type="text" placeholder="Ketik keluhan atau pertanyaan warga..." autocomplete="off" required>
+              </div>
+              <button class="chat-send-btn" id="btnChatSend" type="submit" aria-label="Kirim Pesan" title="Kirim Pesan">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- SUB-VIEW 2: BUKU PANDUAN TEKNIS LAPANGAN & SOP WARGA -->
+        <div class="helpdesk-subview" id="helpdeskInfoView">
+          <!-- SOP Hero Header Card -->
+          <div class="sop-hero-card">
+            <div class="sop-hero-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="sop-hero-title">Buku Panduan &amp; SOP Warga</h3>
+              <p class="sop-hero-sub">Panduan keselamatan mandiri, penyetelan api kompor, dan pemeliharaan biogas TPAS Manggar &times; DLH Balikpapan.</p>
+            </div>
+          </div>
+
+          <!-- Accordion of 6 Practical SOPs -->
+          <div class="sop-accordion-list" id="sopAccordionList">
+            <!-- Dynamic SOP cards from SOP_GUIDES -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================================
+           TAB 4: LAPOR & EMERGENCY HOTLINE
            =================================================================== -->
       <section class="tab-pane" id="tab-lapor" role="tabpanel" aria-labelledby="nav-tab-lapor">
 
@@ -512,7 +661,7 @@
       </section>
 
       <!-- ===================================================================
-           TAB 4: PROFIL & PENGATURAN
+           TAB 5: PROFIL & PENGATURAN
            =================================================================== -->
       <section class="tab-pane" id="tab-profil" role="tabpanel" aria-labelledby="nav-tab-profil">
 
@@ -522,7 +671,7 @@
             <div class="profile-avatar" id="profAvatarInitials">SA</div>
             <div class="profile-names">
               <h3 id="profCustomerName">Ibu Siti Aminah</h3>
-              <p id="profCustomerRole">Rumah Tangga &bull; ID Pelanggan: <strong class="tabular-nums" id="profCustomerId">SR-0142</strong></p>
+              <p id="profCustomerRole">Rumah Tangga | ID Pelanggan: <strong class="tabular-nums" id="profCustomerId">SR-0142</strong></p>
             </div>
           </div>
 
@@ -598,17 +747,17 @@
 
         <!-- Office / Service Info Box -->
         <div class="office-info-box">
-          <strong>UPTD Pengelolaan TPA Sampah Manggar &bull; DLH Kota Balikpapan</strong><br>
+          <strong>UPTD Pengelolaan TPA Sampah Manggar | DLH Kota Balikpapan</strong><br>
           Jaringan Pipa Distribusi Biogas WASTECO KM 12 Manggar, Balikpapan Timur.<br>
           Melayani 380 Sambungan Rumah Tangga &amp; 29 UMKM Binaan Energi Bersih.<br>
-          <span style="display:block;margin-top:4px;font-size:0.68rem;color:#718096;">METHABALANCE Mobile v2.4 &bull; Terhubung ke SCADA Pusat GIS Balikpapan</span>
+          <span style="display:block;margin-top:4px;font-size:0.68rem;color:#718096;">METHABALANCE Mobile v2.4 | Terhubung ke SCADA Pusat GIS Balikpapan</span>
         </div>
 
       </section>
 
     </main>
 
-    <!-- PERSISTENT BOTTOM NAVIGATION BAR (4 TABS) -->
+    <!-- PERSISTENT BOTTOM NAVIGATION BAR (5 TABS) -->
     <nav class="bottom-nav" aria-label="Navigasi Bawah">
       <button class="nav-tab-btn active" id="btnTabBeranda" type="button" data-tab="tab-beranda">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -623,6 +772,13 @@
           <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
         </svg>
         <span>Telemetri</span>
+      </button>
+
+      <button class="nav-tab-btn" id="btnTabHelpdesk" type="button" data-tab="tab-helpdesk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+        <span>Bantuan</span>
       </button>
 
       <button class="nav-tab-btn" id="btnTabLapor" type="button" data-tab="tab-lapor">
@@ -676,24 +832,24 @@
         <!-- Option 1: Warga RT 23 -->
         <button class="card" id="btnSelectWarga" type="button" style="text-align:left;cursor:pointer;border:2px solid var(--primary);background:var(--primary-light);">
           <div style="display:flex;justify-content:space-between;align-items:center;">
-            <strong style="color:var(--primary-dark);font-size:0.92rem;">Rumah Tangga &bull; Ibu Siti Aminah</strong>
+            <strong style="color:var(--primary-dark);font-size:0.92rem;">Rumah Tangga | Ibu Siti Aminah</strong>
             <span class="badge badge-success">Aktif</span>
           </div>
           <div style="font-size:0.76rem;color:var(--text-secondary);margin-top:4px;">
-            ID SR-0142 &bull; RT 23 Manggar &bull; Jalur Node-06 Cabang B<br>
-            Pemakaian: <strong class="tabular-nums">18,4 m³</strong> &bull; Hemat: <strong class="tabular-nums">Rp 80.000/bln</strong>
+            ID SR-0142 | RT 23 Manggar | Jalur Node-06 Cabang B<br>
+            Pemakaian: <strong class="tabular-nums">18,4 m³</strong> | Hemat: <strong class="tabular-nums">Rp 80.000/bln</strong>
           </div>
         </button>
 
         <!-- Option 2: UMKM Tahu & Tempe -->
         <button class="card" id="btnSelectUmkm" type="button" style="text-align:left;cursor:pointer;border:1px solid var(--border);">
           <div style="display:flex;justify-content:space-between;align-items:center;">
-            <strong style="color:var(--text-primary);font-size:0.92rem;">Pelaku Usaha &bull; Tahu &amp; Tempe Manggar</strong>
+            <strong style="color:var(--text-primary);font-size:0.92rem;">Pelaku Usaha | Tahu &amp; Tempe Manggar</strong>
             <span class="badge" style="background:#e2e8f0;color:#475569;">Beralih</span>
           </div>
           <div style="font-size:0.76rem;color:var(--text-secondary);margin-top:4px;">
-            ID UMKM-008 &bull; RT 22 Manggar &bull; Jalur Node-11 Klaster C<br>
-            Pemakaian: <strong class="tabular-nums">94,2 m³</strong> &bull; Hemat: <strong class="tabular-nums">Rp 420.000/bln</strong>
+            ID UMKM-008 | RT 22 Manggar | Jalur Node-11 Klaster C<br>
+            Pemakaian: <strong class="tabular-nums">94,2 m³</strong> | Hemat: <strong class="tabular-nums">Rp 420.000/bln</strong>
           </div>
         </button>
       </div>
@@ -728,7 +884,7 @@
         <button class="card" id="btnSetGridNormal" type="button" style="text-align:left;cursor:pointer;border:2px solid var(--primary);background:var(--primary-light);">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <strong style="color:var(--primary-dark);font-size:0.92rem;">Kondisi NORMAL</strong>
-            <span class="badge badge-success">Aliran Lancar</span>
+            <span style="font-weight:700;font-size:0.75rem;color:var(--color-emerald-deep);">Aliran Lancar</span>
           </div>
           <div style="font-size:0.76rem;color:var(--text-secondary);margin-top:4px;">
             Pasokan gas metana mengalir normal ke seluruh sambungan rumah tangga &amp; UMKM. Tekanan stabil 4,2 kPa.
@@ -738,7 +894,7 @@
         <button class="card" id="btnSetGridIsolated" type="button" style="text-align:left;cursor:pointer;border:2px solid var(--danger);background:var(--danger-light);">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <strong style="color:var(--danger);font-size:0.92rem;">Kondisi ISOLASI DARURAT</strong>
-            <span class="badge badge-danger">Katup Tertutup</span>
+            <span style="font-weight:700;font-size:0.75rem;color:var(--danger);">Katup Tertutup</span>
           </div>
           <div style="font-size:0.76rem;color:var(--danger-dark);margin-top:4px;">
             Katup motorik otomatis Node-06 menutup (&lt; 5 detik). Banner merah aktif, pasokan terhenti sementara untuk keselamatan warga.
@@ -812,7 +968,7 @@
           </svg>
           <div style="line-height:1.25;">
             <span style="display:block;">Geotag Koordinat GPS Otomatis:</span>
-            <strong class="tabular-nums" id="formGeotagCoord">-1.2152° S, 116.9304° E &bull; RT 23 Manggar</strong>
+            <strong class="tabular-nums" id="formGeotagCoord">-1.2152° S, 116.9304° E | RT 23 Manggar</strong>
           </div>
         </div>
 
@@ -845,6 +1001,194 @@
           Kirim Laporan Resmi ke DLH
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================
+       MODAL 5: WEATHER & CONDENSATE DETAILS MODAL
+       =================================================================== -->
+  <div class="modal-backdrop" id="weatherModal">
+    <div class="modal-sheet" role="dialog" aria-labelledby="weatherModalTitle">
+      <div class="modal-sheet-header">
+        <div class="modal-sheet-title" id="weatherModalTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" style="color:var(--color-emerald-deep);">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          Telemetri Cuaca Lapangan TPAS Manggar
+        </div>
+        <button class="modal-close-btn" id="btnCloseWeatherModal" type="button" aria-label="Tutup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="weather-modal-body">
+        <div class="weather-station-pill">
+          <span class="pulse-dot" style="background:#10b981;"></span>
+          <span>Stasiun Cuaca AWS TPAS Manggar | -1.2135° S, 116.9328° E</span>
+        </div>
+
+        <div class="weather-kpi-grid">
+          <div class="weather-kpi-item">
+            <div class="kpi-label">Suhu Udara</div>
+            <div class="kpi-value" id="modalWeatherTemp">29,4°C</div>
+            <div class="kpi-sub" id="modalWeatherCond">Cerah Berawan</div>
+          </div>
+          <div class="weather-kpi-item">
+            <div class="kpi-label">Kelembaban Relatif</div>
+            <div class="kpi-value" id="modalWeatherHum">81% RH</div>
+            <div class="kpi-sub">Rentang Normal Lapangan</div>
+          </div>
+          <div class="weather-kpi-item">
+            <div class="kpi-label">Titik Embun (Dew Point)</div>
+            <div class="kpi-value" id="modalWeatherDew">24,1°C</div>
+            <div class="kpi-sub">Di Bawah Suhu Pipa (Aman)</div>
+          </div>
+          <div class="weather-kpi-item">
+            <div class="kpi-label">Tekanan Barometrik</div>
+            <div class="kpi-value" id="modalWeatherBaro">1011 hPa</div>
+            <div class="kpi-sub">Angin 12 km/h BD</div>
+          </div>
+        </div>
+
+        <div class="weather-note-box">
+          <div class="note-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            Pengaruh terhadap Jaringan Pipa Biogas:
+          </div>
+          <p id="modalWeatherImpact" style="font-size:0.78rem;line-height:1.45;color:var(--text-secondary);margin:0;">
+            Kelembaban udara 81% berada dalam rentang aman. Laju pembentukan kondensat air di cekungan pipa Node-07 terkontrol normal tanpa indikasi penyumbatan uap air (water-blocking). Katup kuras gravitasi siaga normal.
+          </p>
+        </div>
+
+        <div style="margin-top:12px;font-size:0.72rem;color:var(--text-muted);text-align:center;">
+          Pembaruan Terakhir: <strong id="modalWeatherUpdated">14 Nov 2026, 13:30 WITA</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================
+       MODAL 6: NODE GIS & VALVE INSPECTION MODAL
+       =================================================================== -->
+  <div class="modal-backdrop" id="nodeDetailModal">
+    <div class="modal-sheet" role="dialog" aria-labelledby="nodeModalTitle">
+      <div class="modal-sheet-header">
+        <div class="modal-sheet-title" id="nodeModalTitle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" style="color:var(--primary);">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+            <line x1="8" y1="2" x2="8" y2="18"/>
+            <line x1="16" y1="6" x2="16" y2="22"/>
+          </svg>
+          <span id="nodeDetailTitle">Detail Node &amp; Katup Motorik</span>
+        </div>
+        <button class="modal-close-btn" id="btnCloseNodeModal" type="button" aria-label="Tutup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="node-modal-body" style="padding:16px;max-height:76vh;overflow-y:auto;">
+        <!-- Status Card -->
+        <div class="node-status-box" id="nodeModalStatusBox" style="background:var(--bg-canvas);border:1px solid var(--border-color);border-radius:var(--radius-panel);padding:14px;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);font-weight:700;">Status Katup Motorik</div>
+            <span id="nodeModalValveBadge" style="font-size:0.8rem;font-weight:700;color:var(--color-emerald-deep);">Terbuka (Normal)</span>
+          </div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);margin-bottom:2px;" id="nodeModalNodeName">Node-06 Cabang B</div>
+          <div style="font-size:0.78rem;color:var(--text-secondary);" id="nodeModalSector">Sektor RT 23 Manggar | Jl. Proklamasi</div>
+        </div>
+
+        <!-- Telemetry Values Grid -->
+        <div class="telemetry-grid" style="margin-bottom:14px;">
+          <div class="telemetry-card" style="padding:10px 12px;">
+            <div class="telemetry-label-row">
+              <span style="font-size:0.7rem;">Tekanan Pipa</span>
+            </div>
+            <div class="telemetry-val-row" style="margin:4px 0;">
+              <span class="telemetry-big-num tabular-nums" id="nodeModalPressure" style="font-size:1.3rem;">4,2</span>
+              <span class="telemetry-unit" style="font-size:0.75rem;">kPa</span>
+            </div>
+            <div style="font-size:0.68rem;color:var(--text-muted);">Ambang 2,5 - 6,0 kPa</div>
+          </div>
+          <div class="telemetry-card" style="padding:10px 12px;">
+            <div class="telemetry-label-row">
+              <span style="font-size:0.7rem;">Debit Aliran</span>
+            </div>
+            <div class="telemetry-val-row" style="margin:4px 0;">
+              <span class="telemetry-big-num tabular-nums" id="nodeModalFlow" style="font-size:1.3rem;">18,4</span>
+              <span class="telemetry-unit" style="font-size:0.75rem;">Nm³/h</span>
+            </div>
+            <div style="font-size:0.68rem;color:var(--text-muted);">Laju Alir Lapangan</div>
+          </div>
+        </div>
+
+        <!-- Technical Specification Table -->
+        <div style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-panel);padding:12px;margin-bottom:14px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-primary);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;">
+            Spesifikasi Komponen SCADA
+          </div>
+          <table style="width:100%;font-size:0.75rem;border-collapse:collapse;">
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border-color);">
+                <td style="padding:6px 0;color:var(--text-muted);width:40%;">Kode Aset Node</td>
+                <td style="padding:6px 0;font-weight:600;font-family:monospace;" id="nodeModalCode">MB-HD-06</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-color);">
+                <td style="padding:6px 0;color:var(--text-muted);">Tipe Katup</td>
+                <td style="padding:6px 0;font-weight:600;" id="nodeModalValveType">Motorized Ball Valve SS304 NC</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-color);">
+                <td style="padding:6px 0;color:var(--text-muted);">Kecepatan Tutup</td>
+                <td style="padding:6px 0;font-weight:600;">3,8 Detik (Solenoid Release)</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-color);">
+                <td style="padding:6px 0;color:var(--text-muted);">Aktuator &amp; Proteksi</td>
+                <td style="padding:6px 0;font-weight:600;">24VDC Rotary Actuator | IP67</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-color);">
+                <td style="padding:6px 0;color:var(--text-muted);">Spesifikasi Pipa</td>
+                <td style="padding:6px 0;font-weight:600;">PVC 3 Inci Class AW (Tekanan Rendah)</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-color);">
+                <td style="padding:6px 0;color:var(--text-muted);">Elevasi Kontur</td>
+                <td style="padding:6px 0;font-weight:600;" id="nodeModalElevation">14 m DPL</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0;color:var(--text-muted);">Warga Terdampak</td>
+                <td style="padding:6px 0;font-weight:600;color:var(--color-emerald-deep);" id="nodeModalBeneficiaries">95 Sambungan Rumah | 6 UMKM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button class="btn-primary" id="btnNodeAskHelpDesk" type="button" style="justify-content:center;font-size:0.82rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Tanya Katup Ini ke Petugas / Chatbot
+          </button>
+          <button class="btn-secondary" id="btnNodeReportIssue" type="button" style="justify-content:center;font-size:0.82rem;color:var(--danger);border-color:rgba(220,38,38,0.3);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Laporkan Kendala di Node Ini
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

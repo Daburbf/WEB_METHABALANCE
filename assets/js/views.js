@@ -113,7 +113,7 @@ window.MB = window.MB || {};
             </div>
             <div class="row">
               <span class="status-text neutral">Basis: ${MB.fmt.esc(c.flow.basis)}</span>
-              <span class="status-text healthy">● Validitas: Lengkap &amp; Sinkron</span>
+              <span class="status-text healthy">Validitas: Lengkap &amp; Sinkron</span>
             </div>
           </div>
           <div class="balance-list">
@@ -125,8 +125,7 @@ window.MB = window.MB || {};
                 <div class="metric-sub">Stasiun Ekstraksi TPAS Manggar (MB-HU-1)</div>
               </div>
               <div class="balance-item-meta">
-                <span class="status-text healthy">● Sumber Utama</span>
-                <span class="muted">&bull;</span>
+                <span class="status-text healthy">Sumber Utama</span>
                 <span class="muted">Thermal Mass FCI ST50</span>
               </div>
             </div>
@@ -140,7 +139,6 @@ window.MB = window.MB || {};
               </div>
               <div class="balance-item-meta">
                 <span class="status-text neutral">4 Batas Zona Distribusi</span>
-                <span class="muted">&bull;</span>
                 <span class="muted">MB-HD-1 s/d MB-HD-4</span>
               </div>
             </div>
@@ -180,7 +178,7 @@ window.MB = window.MB || {};
         <div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
             <h3 style="font-size:1.02rem;">Kondisi Operasional 5 Node Pengukuran</h3>
-            <a href="#nodes" class="btn btn-sm btn-quiet">Lihat Detail Konfigurasi Sensor &rarr;</a>
+            <a href="#nodes" class="btn btn-sm btn-quiet">Detail</a>
           </div>
           <div class="quick-nodes-grid">
             ${c.nodes.map(function (n) {
@@ -221,7 +219,7 @@ window.MB = window.MB || {};
           <div class="panel-head">
             <h2 id="heading-nodes-table">Status 5 Node Pengukuran Terpasang</h2>
             <div class="row">
-              <a href="#live" class="btn btn-sm">Buka Live Monitoring Lengkap &rarr;</a>
+              <a href="#live" class="btn btn-sm">Buka Live Monitoring</a>
             </div>
           </div>
           <div class="table-wrap">
@@ -287,7 +285,7 @@ window.MB = window.MB || {};
                 <button class="btn btn-sm btn-filter" type="button" data-filter="active">Peringatan Aktif (${activeAlarms.length})</button>
                 <button class="btn btn-sm btn-filter" type="button" data-filter="history">Riwayat Selesai (${historyAlarms.length})</button>
               </div>
-              <a href="#incidents" class="btn btn-sm btn-primary">Buka Modul Insiden &rarr;</a>
+              <a href="#incidents" class="btn btn-sm btn-primary">Buka Modul Insiden</a>
             </div>
           </div>
           <div class="panel-body tight">
@@ -311,7 +309,7 @@ window.MB = window.MB || {};
                     var isAct = a.active && MB.engine.isOpen(a);
                     var statusCls = isAct ? (a.severity === 'critical' ? 'st-crit' : 'st-warn') : 'st-ok';
                     var timeStr = isAct
-                      ? `<strong style="color:var(--color-rose);">Aktif</strong> &bull; ${a.start ? MB.fmt.dateTimeShort(a.start) : 'Saat ini'}`
+                      ? `<strong style="color:var(--color-rose);">Aktif</strong> - ${a.start ? MB.fmt.dateTimeShort(a.start) : 'Saat ini'}`
                       : `<span class="muted">${a.start ? MB.fmt.dateTimeShort(a.start) : '-'} &ndash; ${a.end ? MB.fmt.time(a.end) : 'Pulih'}</span>`;
                     return `
                       <tr class="alarm-row" data-type="${isAct ? 'active' : 'history'}">
@@ -431,12 +429,11 @@ window.MB = window.MB || {};
                   var q = entry ? entry.values.flow.value : null;
                   var tg = entry ? entry.values.gas_temp.value : null;
                   var ch4 = entry ? entry.values.ch4.value : null;
-                  var o2 = entry ? entry.values.o2.value : null;
                   var bv = entry ? entry.values.battery_v.value : null;
                   var comm = entry ? entry.comm : null;
 
                   var gasQualityText = n.type === 'upstream'
-                    ? (ch4 !== null ? `CH₄ <strong>${fmtVal(ch4, 1)}%</strong> &bull; O₂ ${fmtVal(o2, 1)}%` : '<span class="na">Memuat...</span>')
+                    ? (ch4 !== null ? `CH₄ <strong>${fmtVal(ch4, 1)}%</strong>` : '<span class="na">Memuat...</span>')
                     : '<span class="muted" style="font-size:0.75rem;">Aliran &amp; Tekanan</span>';
 
                   var bPct = bv !== null ? Math.min(100, Math.max(0, Math.round(((bv - 11.5) / 2.0) * 100))) : null;
@@ -488,8 +485,6 @@ window.MB = window.MB || {};
                 <option value="flow">Laju Aliran (${c.flow.unit})</option>
                 <option value="gas_temp">Suhu Gas (°C)</option>
                 <option value="ch4">Konsentrasi CH₄ (%vol)</option>
-                <option value="o2">Konsentrasi O₂ (%vol)</option>
-                <option value="h2s">Konsentrasi H₂S (ppm)</option>
                 <option value="battery_v">Tegangan Baterai (V)</option>
               </select>
               <div class="seg" role="group" aria-label="Rentang Waktu">
@@ -701,7 +696,7 @@ window.MB = window.MB || {};
                       <div>
                         <span class="tag ${n.type === 'upstream' ? 'up' : ''}">${MB.fmt.esc(n.id)}</span>
                         <strong style="margin-left:8px;font-size:1.05rem;">${MB.fmt.esc(n.name)}</strong>
-                        <span class="muted" style="margin-left:8px;">&bull; ${MB.fmt.esc(n.placement)}</span>
+                        <span class="muted" style="margin-left:8px;">| ${MB.fmt.esc(n.placement)}</span>
                       </div>
                       <div class="row">
                         <span class="status-text ${n.installStatus === 'installed' ? 'st-ok' : 'st-warn'}">${n.installStatus === 'installed' ? 'Terpasang' : 'Belum Terpasang'}</span>
@@ -776,7 +771,7 @@ window.MB = window.MB || {};
               <p class="muted" style="margin-top:2px;">Rute jalur pipa transmisi dan distribusi gas metana terpusat di kawasan Tempat Pemrosesan Akhir Sampah (TPAS) Manggar dan lingkungan RT warga sekitar.</p>
             </div>
             <div class="row">
-              <span class="status-text healthy">● 5 Node Terpasang</span>
+              <span class="status-text healthy">5 Node Terpasang</span>
               <span class="status-text neutral">Akumulasi Jaringan: 8,3 km (Area Sekitar TPA)</span>
             </div>
           </div>
@@ -786,13 +781,13 @@ window.MB = window.MB || {};
           <div class="panel-foot" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
             <div class="legend" style="display:flex;align-items:center;gap:14px;font-size:0.8rem;flex-wrap:wrap;">
               <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:4px;background:#059669;border-radius:2px;"></span> Pipa Transmisi Utama (DN80)</span>
-              <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:3px;background:#0284c7;border-radius:2px;"></span> Pipa Distribusi Gang (DN50/DN32)</span>
-              <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:0;border-top:2px dashed #0284c7;"></span> Sambungan Rumah (SR)</span>
-              <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#0284c7;border:1px solid #fff;"></span> Meter Rumah Warga</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:3px;background:#059669;border-radius:2px;"></span> Pipa Distribusi Gang (DN50/DN32)</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:0;border-top:2px dashed #10b981;"></span> Sambungan Rumah (SR)</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#059669;border:1px solid #fff;"></span> Meter Rumah Warga</span>
               <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#059669;"></span> <strong style="color:#059669;font-size:0.75rem;">MB-HU-1</strong></span>
-              <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#0284c7;"></span> <strong style="color:#0284c7;font-size:0.75rem;">MB-HD-1..4</strong></span>
+              <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#0284c7;"></span> <strong style="color:#10b981;font-size:0.75rem;">MB-HD-1..4</strong></span>
             </div>
-            <small class="muted">Sistem Koordinat WGS84 &bull; Sinkronisasi Geospasial Real-Time</small>
+            <small class="muted">Sistem Koordinat WGS84 | Sinkronisasi Geospasial Real-Time</small>
           </div>
         </section>
       </div>
@@ -938,6 +933,9 @@ window.MB = window.MB || {};
       ]
 ];
 
+    var bounds = [];
+    trunkCoords.forEach(function (pt) { bounds.push(pt); });
+
     var trunkPipe = L.polyline(trunkCoords, {
       color: '#059669',
       weight: 5,
@@ -945,7 +943,17 @@ window.MB = window.MB || {};
       lineCap: 'round',
       lineJoin: 'round'
     }).addTo(map);
-    trunkPipe.bindTooltip('Jaringan Pipa Induk Transmisi Utama (DN80) &bull; Menyusuri Koridor Jalan Proklamasi TPAS Manggar', { sticky: true });
+    trunkPipe.bindTooltip('Jalur Pipa Induk Transmisi Utama (DN80) | Koridor TPAS Manggar - Jl. Proklamasi', { sticky: true });
+
+    // Directional Gas Flow Dashed Overlay (Garis Aliran Gas Hijau Mint Seperti di Warga)
+    L.polyline(trunkCoords, {
+      color: '#34d399',
+      weight: 2.2,
+      opacity: 0.9,
+      lineCap: 'round',
+      lineJoin: 'round',
+      dashArray: '6, 12'
+    }).addTo(map);
 
     // 4 Branch Polylines - 4 Jalur Pipa Distribusi Zona (Garis Biru Solid Melengkung Mengikuti Jalan & Gang Nyata)
     var branches = [
@@ -1348,14 +1356,26 @@ window.MB = window.MB || {};
 ];
 
     branches.forEach(function (b) {
+      b.coords.forEach(function (pt) { bounds.push(pt); });
+
       var line = L.polyline(b.coords, {
-        color: '#0284c7',
-        weight: 3.5,
+        color: '#059669',
+        weight: 3.8,
         opacity: 0.95,
         lineCap: 'round',
         lineJoin: 'round'
       }).addTo(map);
       line.bindTooltip(b.name, { sticky: true });
+
+      // Directional Gas Flow Dashed Overlay (Garis Aliran Gas Hijau Mint Seperti di Warga)
+      L.polyline(b.coords, {
+        color: '#34d399',
+        weight: 1.8,
+        opacity: 0.85,
+        lineCap: 'round',
+        lineJoin: 'round',
+        dashArray: '5, 10'
+      }).addTo(map);
     });
 
     // Sambungan Rumah (SR) - Garis Biru Putus-Putus Rapi Menjalar dari Jalan ke Rumah Warga
@@ -1378,9 +1398,9 @@ window.MB = window.MB || {};
         var housePos = [Number((mid[0] + nlat).toFixed(6)), Number((mid[1] + nlon).toFixed(6))];
         var srCode = 'SR-' + String(tapCounter).padStart(3, '0');
 
-        // Pipa Sambungan Rumah (Garis Biru Putus-Putus Rapi ke Rumah Warga)
+        // Pipa Sambungan Rumah (Garis Hijau Putus-Putus Rapi ke Rumah Warga)
         L.polyline([mid, housePos], {
-          color: '#0284c7',
+          color: '#10b981',
           weight: 1.8,
           dashArray: '4, 4',
           opacity: 0.85
@@ -1389,20 +1409,19 @@ window.MB = window.MB || {};
         // Titik Meteran Rumah Warga
         var meterDot = L.circleMarker(housePos, {
           radius: 3,
-          fillColor: '#0284c7',
+          fillColor: '#059669',
           color: '#ffffff',
           weight: 1,
           opacity: 1,
           fillOpacity: 0.95
         }).addTo(map);
 
-        meterDot.bindTooltip('<strong>' + srCode + '</strong> &bull; Sambungan Rumah', { direction: 'top', offset: [0, -4] });
+        meterDot.bindTooltip('<strong>' + srCode + '</strong> | Sambungan Rumah', { direction: 'top', offset: [0, -4] });
         tapCounter++;
       }
     });
 
     // 5 Measurement Nodes Markers
-    var bounds = [];
     c.nodes.forEach(function (n) {
       if (n.lat && n.lon) {
         bounds.push([n.lat, n.lon]);
@@ -1414,7 +1433,7 @@ window.MB = window.MB || {};
 
         var isMaster = n.type === 'upstream';
         var shortId = n.id.replace('-0', '-');
-        var color = isMaster ? '#059669' : '#0284c7';
+        var color = isMaster ? '#059669' : '#10b981';
         
         // Diperkecil ukurannya serta warnanya serasi
         var marker = L.circleMarker([n.lat, n.lon], {
@@ -1439,7 +1458,7 @@ window.MB = window.MB || {};
               ${ch4Val !== null ? `<tr style="border-bottom:1px dashed #f1f5f9;"><td style="color:#64748b;padding:3px 0;">CH₄ NDIR:</td><td style="text-align:right;font-weight:600;font-family:monospace;">${fmtVal(ch4Val, 1, '%vol')}</td></tr>` : ''}
               <tr><td style="color:#64748b;padding:3px 0;">Elevasi:</td><td style="text-align:right;font-weight:600;">${n.elevation} mdpl</td></tr>
             </table>
-            <button class="btn btn-sm btn-primary" style="width:100%;font-size:0.75rem;padding:5px 8px;" onclick="MB.views.showNodeDetail('${n.id}')">Buka Telemetri Node</button>
+            <button class="btn btn-sm btn-primary" style="width:100%;font-size:0.75rem;padding:5px 8px;" onclick="MB.views.showNodeDetail('${n.id}')">Detail</button>
           </div>
         `;
 
@@ -1456,12 +1475,20 @@ window.MB = window.MB || {};
     });
 
     if (bounds.length > 0) {
-      map.fitBounds(bounds, { padding: [50, 50] });
+      map.fitBounds(bounds, { padding: [35, 35] });
     }
 
-    setTimeout(function () {
-      map.invalidateSize();
-    }, 250);
+    // Pastikan seluruh garis dan tile Leaflet langsung muncul seketika tanpa jeda
+    [60, 180, 400, 800].forEach(function (ms) {
+      setTimeout(function () {
+        if (map) {
+          map.invalidateSize();
+          if (ms === 180 && bounds.length > 0) {
+            map.fitBounds(bounds, { padding: [35, 35] });
+          }
+        }
+      }, ms);
+    });
   }
 
   /* -----------------------------------------------------------
@@ -1555,14 +1582,10 @@ window.MB = window.MB || {};
     var snap = MB.ds.snapshotAt(MB.ds.now());
     var c = MB.config.get();
     var ch4Val = snap.nodes['MB-HU-01'] && snap.nodes['MB-HU-01'].values.ch4 ? snap.nodes['MB-HU-01'].values.ch4.value : null;
-    var o2Val = snap.nodes['MB-HU-01'] && snap.nodes['MB-HU-01'].values.o2 ? snap.nodes['MB-HU-01'].values.o2.value : null;
-    var h2sVal = snap.nodes['MB-HU-01'] && snap.nodes['MB-HU-01'].values.h2s ? snap.nodes['MB-HU-01'].values.h2s.value : null;
     var tempVal = snap.nodes['MB-HU-01'] && snap.nodes['MB-HU-01'].values.gas_temp ? snap.nodes['MB-HU-01'].values.gas_temp.value : null;
     var pressVal = snap.nodes['MB-HU-01'] && snap.nodes['MB-HU-01'].values.pressure ? snap.nodes['MB-HU-01'].values.pressure.value : null;
 
     var ch4Pct = ch4Val !== null ? Math.min(100, Math.max(0, Math.round((ch4Val / 70) * 100))) : 0;
-    var o2Pct = o2Val !== null ? Math.min(100, Math.max(0, Math.round((o2Val / 5) * 100))) : 0;
-    var h2sPct = h2sVal !== null ? Math.min(100, Math.max(0, Math.round((h2sVal / 100) * 100))) : 0;
     var tempPct = tempVal !== null ? Math.min(100, Math.max(0, Math.round((tempVal / 50) * 100))) : 0;
     var pressPct = pressVal !== null ? Math.min(100, Math.max(0, Math.round((pressVal / 20) * 100))) : 0;
 
@@ -1576,12 +1599,12 @@ window.MB = window.MB || {};
             </div>
           </div>
           <div class="panel-body">
-            <!-- Berbaris Sejajar 2, 2, 1 Card Grid -->
-            <div class="g-2-2-1">
-              <!-- Baris 1 - Kartu 1: CH4 NDIR -->
+            <!-- Grid 3 Parameter Kualitas Gas Utama (Metana, Suhu, Tekanan) -->
+            <div class="grid g-3">
+              <!-- Kartu 1: CH4 NDIR -->
               <div class="panel" style="border:1px solid var(--border-card);">
                 <div class="panel-head">
-                  <h3>Metana (CH₄) &bull; NDIR</h3>
+                  <h3>Metana (CH₄) NDIR</h3>
                   ${ch4Val !== null ? (ch4Val >= 50 ? '<span class="status-text st-ok">Kaya Energi</span>' : ch4Val >= 40 ? '<span class="status-text st-warn">Cukup</span>' : '<span class="status-text st-crit">Rendah</span>') : ''}
                 </div>
                 <div class="panel-body">
@@ -1602,58 +1625,10 @@ window.MB = window.MB || {};
                 </div>
               </div>
 
-              <!-- Baris 1 - Kartu 2: O2 Elektrokimia -->
+              <!-- Kartu 2: Suhu Gas Proses -->
               <div class="panel" style="border:1px solid var(--border-card);">
                 <div class="panel-head">
-                  <h3>Oksigen (O₂) &bull; Elektrokimia</h3>
-                  ${o2Val !== null ? (o2Val < 1.0 ? '<span class="status-text st-ok">Bebas Udara</span>' : o2Val < 2.0 ? '<span class="status-text st-warn">Waspada</span>' : '<span class="status-text st-crit">Infiltrasi</span>') : ''}
-                </div>
-                <div class="panel-body">
-                  <div class="metric">
-                    <span class="metric-label">Alphasense O2-A2 (Indikator Infiltrasi Udara)</span>
-                    <span class="metric-value">${fmtVal(o2Val, 2, '%vol')}</span>
-                    <span class="metric-sub">Batas keselamatan LEL &amp; proteksi anaerobik</span>
-                  </div>
-                  <div class="progress-bar-wrap" style="margin-top:16px;">
-                    <div class="progress-bar-head">
-                      <span class="progress-label-sub">Ambang Batas O₂ (Maks 5%vol)</span>
-                      <span class="progress-percent-badge" style="color:${o2Val > 2 ? 'var(--color-rose)' : 'inherit'};">${o2Pct}%</span>
-                    </div>
-                    <div class="progress-track" style="height:9px;">
-                      <div class="progress-fill animated-shimmer" style="width:${o2Pct}%;background:${o2Val && o2Val > 2 ? 'linear-gradient(90deg, #f43f5e, #e11d48)' : 'linear-gradient(90deg, #0284c7, #0369a1)'};"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Baris 2 - Kartu 3: H2S Sensor -->
-              <div class="panel" style="border:1px solid var(--border-card);">
-                <div class="panel-head">
-                  <h3>Hidrogen Sulfida (H₂S) &bull; Sensor</h3>
-                  ${h2sVal !== null ? (h2sVal < 50 ? '<span class="status-text st-ok">Batas Aman</span>' : h2sVal < 80 ? '<span class="status-text st-warn">Waspada Korosi</span>' : '<span class="status-text st-crit">Tinggi</span>') : ''}
-                </div>
-                <div class="panel-body">
-                  <div class="metric">
-                    <span class="metric-label">Alphasense H2S-B4 (Proteksi Korosi Pipa)</span>
-                    <span class="metric-value">${fmtVal(h2sVal, 0, 'ppm')}</span>
-                    <span class="metric-sub">Monitoring gas asam dan integritas sambungan pipa</span>
-                  </div>
-                  <div class="progress-bar-wrap" style="margin-top:16px;">
-                    <div class="progress-bar-head">
-                      <span class="progress-label-sub">Beban Gas Korosif H₂S (Skala 100 ppm)</span>
-                      <span class="progress-percent-badge" style="color:${h2sVal > 70 ? 'var(--color-amber)' : 'inherit'};">${h2sPct}%</span>
-                    </div>
-                    <div class="progress-track" style="height:9px;">
-                      <div class="progress-fill animated-shimmer" style="width:${h2sPct}%;background:${h2sVal && h2sVal > 70 ? 'linear-gradient(90deg, #f59e0b, #d97706)' : 'linear-gradient(90deg, #10b981, #059669)'};"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Baris 2 - Kartu 4: Suhu Gas Proses -->
-              <div class="panel" style="border:1px solid var(--border-card);">
-                <div class="panel-head">
-                  <h3>Suhu Gas Proses &bull; Pt100 RTD</h3>
+                  <h3>Suhu Gas Proses Pt100</h3>
                   ${tempVal !== null ? (tempVal >= 25 && tempVal <= 38 ? '<span class="status-text st-ok">Normal Proses</span>' : '<span class="status-text st-warn">Fluktuatif</span>') : ''}
                 </div>
                 <div class="panel-body">
@@ -1674,10 +1649,10 @@ window.MB = window.MB || {};
                 </div>
               </div>
 
-              <!-- Baris 3 - Kartu 5: Tekanan Jaringan Distribusi (Lebar Penuh) -->
+              <!-- Kartu 3: Tekanan Jaringan Distribusi -->
               <div class="panel" style="border:1px solid var(--border-card);">
                 <div class="panel-head">
-                  <h3>Tekanan Head Jaringan Distribusi &bull; SS316L</h3>
+                  <h3>Tekanan Head Jaringan SS316L</h3>
                   ${pressVal !== null ? (pressVal >= 6.0 && pressVal <= 16.0 ? '<span class="status-text st-ok">Tekanan Terjaga (6–16 kPa)</span>' : '<span class="status-text st-warn">Perlu Penyesuaian</span>') : ''}
                 </div>
                 <div class="panel-body">
@@ -1688,11 +1663,11 @@ window.MB = window.MB || {};
                   </div>
                   <div class="progress-bar-wrap" style="margin-top:16px;">
                     <div class="progress-bar-head">
-                      <span class="progress-label-sub">Head Tekanan Distribusi (Skala 20 kPa)</span>
+                      <span class="progress-label-sub">Rentang Head Tekanan (Skala 20 kPa)</span>
                       <span class="progress-percent-badge">${pressPct}%</span>
                     </div>
                     <div class="progress-track" style="height:9px;">
-                      <div class="progress-fill animated-shimmer" style="width:${pressPct}%;background:linear-gradient(90deg, #0f766e, #115e59);"></div>
+                      <div class="progress-fill animated-shimmer" style="width:${pressPct}%;background:linear-gradient(90deg, #0284c7, #059669);"></div>
                     </div>
                   </div>
                 </div>
@@ -1709,8 +1684,6 @@ window.MB = window.MB || {};
                       <th>Node ID</th>
                       <th>Lokasi / Titik Ukur</th>
                       <th class="num">CH₄ (%vol)</th>
-                      <th class="num">O₂ (%vol)</th>
-                      <th class="num">H₂S (ppm)</th>
                       <th class="num">Suhu Gas (°C)</th>
                       <th>Status Sensor Gas</th>
                     </tr>
@@ -1719,18 +1692,14 @@ window.MB = window.MB || {};
                     ${c.nodes.map(function (n) {
                       var entry = snap.nodes[n.id];
                       var ch4 = entry ? entry.values.ch4.value : null;
-                      var o2 = entry ? entry.values.o2.value : null;
-                      var h2s = entry ? entry.values.h2s.value : null;
                       var tg = entry ? entry.values.gas_temp.value : null;
                       return `
                         <tr>
                           <td data-label="Node ID"><span class="tag ${n.type === 'upstream' ? 'up' : ''}">${MB.fmt.esc(n.id)}</span></td>
                           <td data-label="Lokasi"><strong>${MB.fmt.esc(n.name)}</strong></td>
                           <td data-label="CH₄" class="num">${n.sensors.ch4.status === 'not_installed' ? '<span class="na">Tidak dipasang</span>' : fmtVal(ch4, 1)}</td>
-                          <td data-label="O₂" class="num">${n.sensors.o2.status === 'not_installed' ? '<span class="na">Tidak dipasang</span>' : fmtVal(o2, 2)}</td>
-                          <td data-label="H₂S" class="num">${n.sensors.h2s.status === 'not_installed' ? '<span class="na">Tidak dipasang</span>' : fmtVal(h2s, 0)}</td>
                           <td data-label="Suhu Gas" class="num">${fmtVal(tg, 1)}</td>
-                          <td data-label="Status">${n.sensors.ch4.status === 'installed' || n.sensors.o2.status === 'installed' || n.sensors.h2s.status === 'installed' ? '<span class="status-text st-ok">Sensor Aktif</span>' : '<span class="status-text st-info">Aliran &amp; Tekanan Saja</span>'}</td>
+                          <td data-label="Status">${n.sensors.ch4.status === 'installed' ? '<span class="status-text st-ok">Sensor Aktif</span>' : '<span class="status-text st-info">Aliran &amp; Tekanan Saja</span>'}</td>
                         </tr>
                       `;
                     }).join('')}
@@ -1764,9 +1733,9 @@ window.MB = window.MB || {};
     { id: 'MG-1012', name: 'Dewi Kartika', rt: 'RT 25', rtrw: 'RT 25 / RW 04', address: 'RT 25 / RW 04 No. 11', meter: 36.7, tariff: 10000, savings: 50500, battery: 74, status: 'Aktif' },
     { id: 'MG-1013', name: 'Rahmat Hidayat', rt: 'RT 22', rtrw: 'RT 22 / RW 04', address: 'RT 22 / RW 04 No. 33', meter: 38.4, tariff: 10000, savings: 52000, battery: 72, status: 'Aktif' },
     { id: 'MG-1014', name: 'Yuliana', rt: 'RT 23', rtrw: 'RT 23 / RW 04', address: 'RT 23 / RW 04 No. 09', meter: 40.1, tariff: 10000, savings: 53500, battery: 70, status: 'Aktif' },
-    { id: 'UM-2001', name: 'Bpk. Sukirman (Tahu & Tempe)', rt: 'UMKM', rtrw: 'Klaster UMKM RT 22', address: 'Klaster UMKM KM 12 RT 22', meter: 94.2, tariff: 50000, savings: 370000, battery: 95, status: 'Aktif (Produksi)' },
-    { id: 'UM-2002', name: 'Ibu Warsini (Kerupuk Ikan)', rt: 'UMKM', rtrw: 'Klaster UMKM RT 23', address: 'Jl. Mulawarman RT 23 No. 44', meter: 78.5, tariff: 50000, savings: 310000, battery: 91, status: 'Aktif (Produksi)' },
-    { id: 'UM-2003', name: 'Pak Darto (Warung Makan Manggar)', rt: 'UMKM', rtrw: 'Klaster UMKM RT 24', address: 'Jl. Mulawarman RT 24 No. 02', meter: 64.0, tariff: 50000, savings: 250000, battery: 93, status: 'Aktif (Produksi)' }
+    { id: 'UM-2001', name: 'Bpk. Sukirman (Tahu & Tempe)', rt: 'UMKM', rtrw: 'Klaster UMKM RT 22', address: 'Klaster UMKM KM 12 RT 22', meter: 94.2, tariff: 25000, savings: 370000, battery: 95, status: 'Aktif (Produksi)' },
+    { id: 'UM-2002', name: 'Ibu Warsini (Kerupuk Ikan)', rt: 'UMKM', rtrw: 'Klaster UMKM RT 23', address: 'Jl. Mulawarman RT 23 No. 44', meter: 78.5, tariff: 25000, savings: 310000, battery: 91, status: 'Aktif (Produksi)' },
+    { id: 'UM-2003', name: 'Pak Darto (Warung Makan Manggar)', rt: 'UMKM', rtrw: 'Klaster UMKM RT 24', address: 'Jl. Mulawarman RT 24 No. 02', meter: 64.0, tariff: 25000, savings: 250000, battery: 93, status: 'Aktif (Produksi)' }
   ];
 
   var MONTHLY_EMISSION_DATA = [
@@ -1803,11 +1772,11 @@ window.MB = window.MB || {};
         <g class="chart-bar-group" data-month="${d.bulan}" data-clean="${d.pembakaranBersih}" data-flare="${d.flaringTerbuka}">
           <!-- Bar 1: Pembakaran Bersih -->
           <rect x="${x1.toFixed(1)}" y="${y1.toFixed(1)}" width="${barW}" height="${h1.toFixed(1)}" rx="4" ry="4" fill="#1B4D3E">
-            <title>${d.bulan} • Pembakaran Bersih: ${d.pembakaranBersih.toLocaleString('id-ID')} kg CO₂eq</title>
+            <title>${d.bulan} | Pembakaran Bersih: ${d.pembakaranBersih.toLocaleString('id-ID')} kg CO₂eq</title>
           </rect>
           <!-- Bar 2: Flaring Terbuka -->
           <rect x="${x2.toFixed(1)}" y="${y2.toFixed(1)}" width="${barW}" height="${h2.toFixed(1)}" rx="4" ry="4" fill="#CBD5E1">
-            <title>${d.bulan} • Flaring Terbuka: ${d.flaringTerbuka.toLocaleString('id-ID')} kg CO₂eq</title>
+            <title>${d.bulan} | Flaring Terbuka: ${d.flaringTerbuka.toLocaleString('id-ID')} kg CO₂eq</title>
           </rect>
           <!-- X Axis Label -->
           <text x="${xCenter.toFixed(1)}" y="235" text-anchor="middle" font-size="11" fill="#94A3B8" font-family="'Inter', sans-serif" font-weight="500">${d.bulan}</text>
@@ -1837,7 +1806,7 @@ window.MB = window.MB || {};
           <div class="analytics-card">
             <div class="analytics-kpi-title">Penghematan Warga</div>
             <div class="analytics-kpi-val" style="color:#059669;">Rp 44.400.000</div>
-            <div class="analytics-kpi-sub">Tarif: RT Rp 10.000 &bull; UMKM Rp 25.000</div>
+            <div class="analytics-kpi-sub">Tarif: RT Rp 10.000, UMKM Rp 25.000</div>
           </div>
 
           <!-- KPI 4: Proyeksi ROI -->
@@ -1898,48 +1867,50 @@ window.MB = window.MB || {};
             <div>
               <h3 style="font-size:14px;font-weight:600;color:#0f172a;margin:0;">Efisiensi Destruksi Metana</h3>
               
-              <!-- Semicircular Gauge SVG -->
-              <div style="position:relative;width:100%;height:180px;display:flex;align-items:center;justify-content:center;margin-top:6px;">
-                <svg viewBox="0 0 260 170" style="width:100%;max-width:240px;height:100%;">
-                  <!-- Background Track Arc (220 deg: 200° to -20°) -->
-                  <path d="M 52.34 134.63 A 72 72 0 1 1 207.66 134.63"
+              <!-- Semicircular Gauge SVG dengan Jarak Lega -->
+              <div style="position:relative;width:100%;height:190px;display:flex;align-items:center;justify-content:center;margin-top:8px;">
+                <svg viewBox="0 0 280 180" style="width:100%;max-width:250px;height:100%;">
+                  <!-- Background Track Arc (240 deg) -->
+                  <path d="M 65.52 163.00 A 86 86 0 1 1 214.48 163.00"
                         fill="none"
                         stroke="#E2E8F0"
-                        stroke-width="15"
+                        stroke-width="10"
                         stroke-linecap="round" />
                   
-                  <!-- Filled Green Arc (96.2% of 276.46 = 265.95) -->
-                  <path d="M 52.34 134.63 A 72 72 0 1 1 207.66 134.63"
+                  <!-- Filled Green Arc (96.2% of 360.24 = 346.55) -->
+                  <path d="M 65.52 163.00 A 86 86 0 1 1 214.48 163.00"
                         fill="none"
                         stroke="#059669"
-                        stroke-width="15"
+                        stroke-width="10"
                         stroke-linecap="round"
-                        stroke-dasharray="265.95 300" />
+                        stroke-dasharray="346.55 400" />
                   
-                  <!-- Center Percentage Text -->
-                  <text x="130" y="92" text-anchor="middle" font-size="28" font-weight="700" fill="#0f172a" font-family="'Inter', sans-serif">96,2%</text>
-                  <text x="130" y="124" text-anchor="middle" font-size="10" fill="#64748b" font-family="'Inter', sans-serif">Standar minimum 90%</text>
+                  <!-- Center Percentage Text (Jarak Bebas Nyatu) -->
+                  <text x="140" y="98" text-anchor="middle" font-size="26" font-weight="700" fill="#0f172a" font-family="'Inter', sans-serif">96,2%</text>
+                  <text x="140" y="126" text-anchor="middle" font-size="11" font-weight="500" fill="#64748b" font-family="'Inter', sans-serif">Standar minimum 90%</text>
                 </svg>
               </div>
             </div>
 
             <!-- Financial Impact Summary List -->
-            <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+            <div style="margin-top:14px;display:flex;flex-direction:column;">
               <div class="financial-metric-row">
                 <span class="financial-metric-label">Subsidi LPG Terhindarkan</span>
-                <span class="financial-metric-val">Rp 44,4 Juta / bulan</span>
+                <span class="financial-metric-val">Rp 44,4 Juta <span style="font-weight:400;color:#64748b;font-size:10.5px;">/ bln</span></span>
               </div>
               <div class="financial-metric-row">
                 <span class="financial-metric-label">Nilai Kredit Karbon</span>
-                <span class="financial-metric-val">Rp 12,6 Juta / bulan</span>
+                <span class="financial-metric-val">Rp 12,6 Juta <span style="font-weight:400;color:#64748b;font-size:10.5px;">/ bln</span></span>
               </div>
               <div class="financial-metric-row">
                 <span class="financial-metric-label">Biaya Operasional Jaringan</span>
-                <span class="financial-metric-val">Rp 8,1 Juta / bulan</span>
+                <span class="financial-metric-val">Rp 8,1 Juta <span style="font-weight:400;color:#64748b;font-size:10.5px;">/ bln</span></span>
               </div>
               <div class="financial-metric-row">
                 <span class="financial-metric-label">Iuran Retribusi Biogas</span>
-                <span class="financial-metric-val" style="color:#059669;">RT Rp 10.000 &bull; UMKM Rp 25.000 / bln</span>
+                <span class="financial-metric-val" style="color:#059669;">
+                  RT Rp 10.000, UMKM Rp 25.000 <span style="font-weight:400;color:#64748b;font-size:10.5px;">/ bln</span>
+                </span>
               </div>
             </div>
           </div>
@@ -1955,7 +1926,7 @@ window.MB = window.MB || {};
             </div>
             <div class="row" style="gap:8px;">
               <button class="btn btn-sm btn-primary" id="btnExportCustomerCsv" type="button">Unduh CSV Pelanggan</button>
-              <a href="methabalance-mobile-warga/index.html" target="_blank" class="btn btn-sm">Buka Portal Warga Mobile &rarr;</a>
+              <a href="methabalance-mobile-warga/index.html" target="_blank" class="btn btn-sm">Buka Portal Warga</a>
             </div>
           </div>
 
@@ -2002,7 +1973,7 @@ window.MB = window.MB || {};
                         ${c.meter.toFixed(1).replace('.', ',')}
                       </td>
                       <td data-label="Iuran / Bulan" style="padding:12px 20px;">
-                        <span style="font-weight:600;color:#0f172a;font-variant-numeric:tabular-nums;">${isUmkm ? 'Rp 50.000' : 'Rp 10.000'}</span>
+                        <span style="font-weight:600;color:#0f172a;font-variant-numeric:tabular-nums;">${isUmkm ? 'Rp 25.000' : 'Rp 10.000'}</span>
                         <span class="status-text st-ok" style="font-size:0.65rem;padding:1px 6px;margin-left:6px;">Lunas</span>
                       </td>
                       <td data-label="Penghematan Bulanan" style="padding:12px 20px;color:#047857;font-weight:600;font-variant-numeric:tabular-nums;">
@@ -2130,12 +2101,12 @@ window.MB = window.MB || {};
             <div class="grid g-2">
               <div class="note info">
                 <strong>Deteksi Deviasi Pola Aliran &amp; Tekanan</strong>
-                <p class="muted">Metode: <span class="status-text st-ok">Aktif &bull; Ambang Bergerak</span></p>
+                <p class="muted">Metode: <span class="status-text st-ok">Aktif | Ambang Bergerak</span></p>
                 <p>Memantau fluktuasi tekanan mendadak dan lonjakan aliran abnormal dengan membandingkan nilai instan terhadap median riwayat 60 menit.</p>
               </div>
               <div class="note info">
                 <strong>Analisis Risiko Penyumbatan Kondensat (Water-Blocking)</strong>
-                <p class="muted">Metode: <span class="status-text st-warn">Siaga &bull; Osilasi Koefisien Variasi</span></p>
+                <p class="muted">Metode: <span class="status-text st-warn">Siaga | Osilasi Koefisien Variasi</span></p>
                 <p>Mendeteksi osilasi periodik tekanan pipa (CV &gt; 4%) yang disertai penurunan bertahap laju aliran pada cekungan penampung air.</p>
               </div>
             </div>
@@ -2380,7 +2351,7 @@ window.MB = window.MB || {};
                       }).join('')}
                     </tbody>
                   </table>
-                  <small class="muted" style="display:block;margin-top:8px;">Parameter desain teknis dan target layanan jaringan biogas TPAS Manggar &bull; DLH Balikpapan.</small>
+                  <small class="muted" style="display:block;margin-top:8px;">Parameter desain teknis dan target layanan jaringan biogas TPAS Manggar | DLH Balikpapan.</small>
                 </div>
               </div>
             </div>
@@ -2403,7 +2374,7 @@ window.MB = window.MB || {};
     var c = MB.config.get();
     var snap = MB.ds.snapshotAt(MB.ds.now());
     var rows = [
-      ['Node ID', 'Nama Node', 'Waktu Pengukuran (WITA)', 'Tekanan (kPa)', 'Aliran (' + c.flow.unit + ')', 'Suhu Gas (C)', 'CH4 (%vol)', 'O2 (%vol)', 'H2S (ppm)']
+      ['Node ID', 'Nama Node', 'Waktu Pengukuran (WITA)', 'Tekanan (kPa)', 'Aliran (' + c.flow.unit + ')', 'Suhu Gas (C)', 'CH4 (%vol)']
     ];
 
     c.nodes.forEach(function (n) {
@@ -2412,8 +2383,6 @@ window.MB = window.MB || {};
       var q = e ? e.values.flow.value : null;
       var tg = e ? e.values.gas_temp.value : null;
       var ch4 = e ? e.values.ch4.value : null;
-      var o2 = e ? e.values.o2.value : null;
-      var h2s = e ? e.values.h2s.value : null;
       var tStr = e && e.packet ? MB.fmt.dateTime(e.packet.measuredAt) : 'No Data';
 
       rows.push([
@@ -2423,9 +2392,7 @@ window.MB = window.MB || {};
         p !== null ? p : '',
         q !== null ? q : '',
         tg !== null ? tg : '',
-        ch4 !== null ? ch4 : '',
-        o2 !== null ? o2 : '',
-        h2s !== null ? h2s : ''
+        ch4 !== null ? ch4 : ''
       ]);
     });
 
@@ -2467,15 +2434,15 @@ window.MB = window.MB || {};
               </div>
               <div class="field">
                 <label>Pita Frekuensi Transmisi:</label>
-                <input type="text" value="923.200 MHz &bull; 923.400 MHz (AS923-2)" readonly style="background:var(--bg-card-subtle);">
+                <input type="text" value="923.200 MHz | 923.400 MHz (AS923-2)" readonly style="background:var(--bg-card-subtle);">
               </div>
               <div class="field">
                 <label>Lebar Jalur (Bandwidth):</label>
-                <input type="text" value="125 kHz &bull; Coding Rate 4/5" readonly style="background:var(--bg-card-subtle);">
+                <input type="text" value="125 kHz | Coding Rate 4/5" readonly style="background:var(--bg-card-subtle);">
               </div>
               <div class="field">
                 <label>Spreading Factor &amp; ADR:</label>
-                <input type="text" value="SF7 &bull; Adaptive Data Rate Aktif" readonly style="background:var(--bg-card-subtle);">
+                <input type="text" value="SF7 | Adaptive Data Rate Aktif" readonly style="background:var(--bg-card-subtle);">
               </div>
               <div class="field">
                 <label>Interval Uplink Telemetri:</label>
@@ -2509,7 +2476,7 @@ window.MB = window.MB || {};
               </div>
               <div class="field">
                 <label>Suhu Standar Normal (T_norm):</label>
-                <input type="text" value="0,0 °C (273,15 K) &bull; Nm³/h" readonly style="background:var(--bg-card-subtle);">
+                <input type="text" value="0,0 °C (273,15 K) | Nm³/h" readonly style="background:var(--bg-card-subtle);">
               </div>
               <div class="field">
                 <label>Massa Jenis Acuan CH₄:</label>
@@ -2643,8 +2610,8 @@ window.MB = window.MB || {};
     content.innerHTML = `
       <div class="stack">
         <div class="row">
-          <strong style="font-size:1.15rem;color:var(--text-primary);">${MB.fmt.esc(n.id)} &bull; ${MB.fmt.esc(n.name)}</strong>
-          <span class="muted">&bull; ${MB.fmt.esc(n.placement)}</span>
+          <strong style="font-size:1.15rem;color:var(--text-primary);">${MB.fmt.esc(n.id)} - ${MB.fmt.esc(n.name)}</strong>
+          <span class="muted">${MB.fmt.esc(n.placement)}</span>
         </div>
         <dl class="kv">
           <dt>Tipe Node:</dt>
@@ -2749,7 +2716,7 @@ window.MB = window.MB || {};
           ${inc.logs.map(function (log) {
             return `
               <li>
-                <strong>${MB.fmt.dateTimeShort(log.ts)}</strong> &bull; <em>${MB.fmt.esc(log.author)}</em>:
+                <strong>${MB.fmt.dateTimeShort(log.ts)}</strong> - <em>${MB.fmt.esc(log.author)}</em>:
                 <div>${MB.fmt.esc(log.text)}</div>
               </li>
             `;
@@ -2829,6 +2796,211 @@ window.MB = window.MB || {};
   }
 
   /* -----------------------------------------------------------
+     11. AI COPILOT SCADA DASHBOARD (EMBEDDED DASHBOARD VIEW)
+     ----------------------------------------------------------- */
+  function renderAiCopilotDashboard(container) {
+    var timeStr = MB.copilot && MB.copilot.formatTimeNow ? MB.copilot.formatTimeNow() : '14:10 WITA';
+
+    var html = `
+      <div class="page ai-dashboard-container">
+        <!-- Main Interactive SCADA Console (Full-Width View) -->
+        <div class="ai-dashboard-grid">
+          <div class="ai-dashboard-chat-panel">
+            <div class="ai-dashboard-chat-header">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;">
+                  <!-- Modern AI Sparkles Vector Icon -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                    <path d="M12 3c0 4.5-3.5 8-8 8 4.5 0 8 3.5 8 8 0-4.5 3.5-8 8-8-4.5 0-8-3.5-8-8z"/>
+                    <path d="M19 3c0 1.5-1 2.5-2.5 2.5 1.5 0 2.5 1 2.5 2.5 0-1.5 1-2.5 2.5-2.5-1.5 0-2.5-1-2.5-2.5z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div style="font-size:15px;font-weight:700;letter-spacing:-0.01em;">Konsol AI Assistant</div>
+                </div>
+              </div>
+              <button class="btn btn-quiet btn-sm" id="btnResetAiDashboardChat" type="button" style="margin-left:auto;color:#ffffff;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.25);border-radius:var(--radius-sm);display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 12px;font-size:12px;transition:background 0.2s ease;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                <span>Bersihkan Percakapan</span>
+              </button>
+            </div>
+            <!-- Chat Stream Body -->
+            <div class="ai-dashboard-chat-stream" id="aiDashboardChatStream">
+              <div class="ai-msg bot">
+                <div class="ai-msg-avatar">AI</div>
+                <div class="ai-bubble">
+                  <div class="ai-bubble-head">
+                    <strong>AI Assistant</strong>
+                    <span class="ai-timestamp">${timeStr}</span>
+                  </div>
+                  <div class="ai-bubble-content">
+                    Halo Operator! Saya AI Assistant untuk jaringan pipa biogas 8,3 km TPAS Manggar.
+                    <br><br>
+                    Data telemetri tersinkronisasi secara real-time. Anda dapat menanyakan perhitungan neraca massa, anomali tekanan pipa, status 5 katup motorik GIS, atau SOP teknis kuras kondensat air.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chips Bar (Custom SVG Icons, Tanpa Emoticon) -->
+            <div class="ai-dashboard-chips-bar" id="aiDashboardChipsBar">
+              <button class="ai-dashboard-chip-btn" type="button" data-prompt="Neraca Massa Gas saat ini">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+                Neraca Massa
+              </button>
+              <button class="ai-dashboard-chip-btn" type="button" data-prompt="Cek node katup tertutup">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                Katup GIS
+              </button>
+              <button class="ai-dashboard-chip-btn" type="button" data-prompt="Kualitas gas metana CH4">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                Kualitas CH₄
+              </button>
+              <button class="ai-dashboard-chip-btn" type="button" data-prompt="Insiden aktif di jaringan">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Insiden Pipa
+              </button>
+              <button class="ai-dashboard-chip-btn" type="button" data-prompt="SOP atasi water blocking">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                SOP Kuras
+              </button>
+              <button class="ai-dashboard-chip-btn" type="button" data-prompt="Iuran warga dan subsidi LPG">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                Iuran Retribusi
+              </button>
+            </div>
+
+            <!-- Bottom Chat Input Bar -->
+            <form class="ai-dashboard-input-bar" id="aiDashboardChatForm">
+              <input class="ai-input" id="aiDashboardChatInput" type="text" placeholder="Ketik pertanyaan terkait neraca massa, tekanan pipa, atau katup GIS..." autocomplete="off" required style="flex:1;border:1px solid var(--border-card);border-radius:var(--radius-md);padding:10px 14px;font-size:13px;outline:none;">
+              <button class="btn btn-primary" type="submit" aria-label="Kirim Pesan" style="display:flex;align-items:center;gap:6px;padding:0 18px;">
+                <span>Kirim</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.innerHTML = html;
+
+    // Attach Dashboard Chat Logic
+    var streamEl = container.querySelector('#aiDashboardChatStream');
+    var formEl = container.querySelector('#aiDashboardChatForm');
+    var inputEl = container.querySelector('#aiDashboardChatInput');
+    var resetBtn = container.querySelector('#btnResetAiDashboardChat');
+    var chipsBar = container.querySelector('#aiDashboardChipsBar');
+
+    function appendUserMessage(text) {
+      if (!streamEl) return;
+      var msg = document.createElement('div');
+      msg.className = 'ai-msg user';
+      msg.innerHTML = `
+        <div class="ai-msg-avatar">OP</div>
+        <div class="ai-bubble">
+          <div class="ai-bubble-head">
+            <strong>Operator</strong>
+            <span class="ai-timestamp">${MB.copilot.formatTimeNow ? MB.copilot.formatTimeNow() : ''}</span>
+          </div>
+          <div class="ai-bubble-content">${MB.fmt.esc(text)}</div>
+        </div>
+      `;
+      streamEl.appendChild(msg);
+      streamEl.scrollTop = streamEl.scrollHeight;
+    }
+
+    function appendBotResponse(resp) {
+      if (!streamEl) return;
+      var msg = document.createElement('div');
+      msg.className = 'ai-msg bot';
+      var actionBtnHtml = '';
+      if (resp.actionLabel && resp.actionHash) {
+        actionBtnHtml = `
+          <button class="ai-action-btn" type="button" data-hash="${resp.actionHash}" style="margin-top:10px;display:inline-block;background:var(--color-emerald-light);border:1px solid rgba(16,185,129,0.4);color:var(--color-emerald-deep);padding:6px 14px;border-radius:var(--radius-sm);font-size:12px;cursor:pointer;font-weight:600;">
+            <span>${resp.actionLabel}</span>
+          </button>
+        `;
+      }
+
+      msg.innerHTML = `
+        <div class="ai-msg-avatar">AI</div>
+        <div class="ai-bubble">
+          <div class="ai-bubble-head">
+            <strong>AI Assistant</strong>
+            <span class="ai-timestamp">${MB.copilot.formatTimeNow ? MB.copilot.formatTimeNow() : ''}</span>
+          </div>
+          <div class="ai-bubble-content">
+            <h4 style="font-size:13px;font-weight:700;color:var(--text-primary);margin:0 0 8px;">${MB.fmt.esc(resp.title)}</h4>
+            ${MB.copilot.formatMarkdown(resp.text)}
+            ${actionBtnHtml}
+          </div>
+        </div>
+      `;
+      streamEl.appendChild(msg);
+
+      var btn = msg.querySelector('.ai-action-btn');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var h = this.getAttribute('data-hash');
+          if (h) window.location.hash = h;
+        });
+      }
+
+      streamEl.scrollTop = streamEl.scrollHeight;
+    }
+
+    function handleSend(text) {
+      if (!text) return;
+      appendUserMessage(text);
+      setTimeout(function () {
+        var resp = MB.copilot.query(text);
+        appendBotResponse(resp);
+      }, 150);
+    }
+
+    if (formEl) {
+      formEl.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var val = inputEl ? inputEl.value.trim() : '';
+        if (!val) return;
+        if (inputEl) inputEl.value = '';
+        handleSend(val);
+      });
+    }
+
+    if (chipsBar) {
+      chipsBar.querySelectorAll('.ai-dashboard-chip-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var p = this.getAttribute('data-prompt');
+          handleSend(p);
+        });
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        if (!streamEl) return;
+        streamEl.innerHTML = `
+          <div class="ai-msg bot">
+            <div class="ai-msg-avatar">AI</div>
+            <div class="ai-bubble">
+              <div class="ai-bubble-head">
+                <strong>AI Assistant</strong>
+                <span class="ai-timestamp">${MB.copilot.formatTimeNow ? MB.copilot.formatTimeNow() : ''}</span>
+              </div>
+              <div class="ai-bubble-content">
+                Percakapan telah direset. Data telemetri TPAS Manggar tetap tersinkronisasi 100%. Ada yang dapat saya bantu?
+              </div>
+            </div>
+          </div>
+        `;
+        MB.views.showToast('Percakapan AI Assistant direset.');
+      });
+    }
+  }
+
+  /* -----------------------------------------------------------
      ROUTER & NAVIGATION
      ----------------------------------------------------------- */
   var VIEWS = {
@@ -2841,6 +3013,7 @@ window.MB = window.MB || {};
     analytics: renderAnalyticsCustomer,
     incidents: renderAnomalyIncident,
     'device-health': renderDeviceHealth,
+    'ai-copilot': renderAiCopilotDashboard,
     reports: renderReports,
     settings: renderSettings
   };
@@ -2870,6 +3043,7 @@ window.MB = window.MB || {};
       analytics: 'Pelanggan & Analisis Karbon',
       incidents: 'Anomaly & Incident',
       'device-health': 'Device Health',
+      'ai-copilot': 'AI Assistant',
       reports: 'Reports',
       settings: 'Settings'
     };

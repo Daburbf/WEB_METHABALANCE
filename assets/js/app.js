@@ -241,6 +241,11 @@ window.MB = window.MB || {};
         });
       }
     }, 30000);
+
+    // Initialize SCADA AI Copilot Assistant
+    if (MB.copilot) {
+      MB.copilot.init();
+    }
   }
 
   // DOM Ready
